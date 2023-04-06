@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import ReactLoading from 'react-loading'
 import PropTypes from 'prop-types'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { FaUserAlt } from 'react-icons/fa'
 import { MdMail, } from 'react-icons/md'
 import { AiFillLock } from 'react-icons/ai'
@@ -67,7 +67,7 @@ const Register = (props) =>{
           onChange={(e) => setInputName({ value: e.target.value, error: '' })}
           value={inputName.value}/>
       </div>
-      { inputName.error ? <span>{inputName.error}</span> : <></> }
+      { inputName.error ? <span className='error-message'>{inputName.error}</span> : <></> }
       <div className='camp'>
         <label><MdMail/></label>
         <input
@@ -76,7 +76,7 @@ const Register = (props) =>{
           onChange={(e) => setInputEmail({ value: e.target.value, error: '' })}
           value={inputEmail.value}></input>
       </div>
-      { inputEmail.error ? <span>{inputEmail.error}</span> : <></> }
+      { inputEmail.error ? <span className='error-message'>{inputEmail.error}</span> : <></> }
       <div className='camp'>
         <label><AiFillLock/></label>
         <input
@@ -85,8 +85,9 @@ const Register = (props) =>{
           onChange={(e) => setInputPassword({ value: e.target.value, error: '' })}
           value={inputPassword.value}></input>
       </div>
-      { inputPassword.error ? <span>{inputPassword.error}</span> : <></> }
+      { inputPassword.error ? <span className='error-message'>{inputPassword.error}</span> : <></> }
       <button>Cadastrar { loading ? <span><ReactLoading type='spin' width='15px' height='15px'/></span> : <></>}</button>
+      <span className='message-login'>Já tem uma conta? Faça <Link to='/login'>Login</Link></span>
     </form>
   )
 }

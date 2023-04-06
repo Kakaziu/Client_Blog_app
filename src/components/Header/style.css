@@ -32,12 +32,14 @@
 
 .links{
   position: absolute;
+  z-index: 9999;
   right: 3%;
   top: 5%;
   box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.288);
   border-radius: 4px;
   padding: 10px;
   opacity: 0;
+  text-align: center;
 }
 
 .links-show{
@@ -60,7 +62,7 @@
   }
 
   to{
-    top: 15%;
+    top: 14%;
     opacity: 1;
   }
 }
