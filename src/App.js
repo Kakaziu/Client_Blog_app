@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import store from './store'
 import Author from './pages/Author'
 import Auth from './components/Auth'
+import NewPost from './pages/NewPost'
 
 const App = () =>{
   return (
@@ -20,6 +21,7 @@ const App = () =>{
             <Route path='/register/author' element={<Register admin={true} title='Autor'/>}/>
             <Route path='/login' element={<Login/>}/>
             <Route path='/panel' element={<Auth><Author/></Auth>}/>
+            <Route path='/post' element={<Auth><NewPost/></Auth>}/>
           </Routes>
         </div>
       </Provider>

@@ -86,3 +86,9 @@
   text-align: center;
   margin-top: 10px;
 }
+
+.message-login a{
+  color: blue;
+  text-decoration: solid;
+  padding: 0;
+}

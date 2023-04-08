@@ -1,0 +1,80 @@
+.panel-nav{
+  display: flex;
+  align-items: center;
+  padding: 10px;
+}
+
+.panel-nav span{
+  font-size: 18px;
+}
+
+.panel-nav button{
+  background-color: transparent;
+  color: black;
+  padding: 0;
+  margin-left: 15px;
+}
+
+.panel-nav button:hover{
+  background-color: transparent;
+}
+
+.actions{
+  padding: 15px;
+  box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.466);
+  position: absolute;
+  right: 6%;
+  top: 4%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 4px;
+  justify-content: center;
+  transition: 0.5s;
+}
+
+.actions-show{
+  animation-name: actionsLinks;
+  animation-duration: 0.5s;
+  animation-fill-mode: forwards;
+}
+
+.actions button, a{
+  background-color: transparent;
+  padding: 15px;
+  text-decoration: none;
+  color: #adadad;
+  transition: 0.3s;
+}
+
+.actions button:hover{
+  background-color: transparent;
+  color: red;
+}
+
+.actions a:hover{
+  color: blue;
+}
+
+.actions hr{
+  width: 100%;
+}
+
+.actions span{
+  padding: 15px;
+}
+
+@keyframes actionsLinks{
+  from{
+    top: 4%;
+    opacity: 0;
+  }
+
+  to{
+    top: 15%;
+    opacity: 1;
+  }
+}
+
+
+

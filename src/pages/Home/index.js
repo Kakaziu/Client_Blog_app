@@ -2,6 +2,7 @@ import React from 'react'
 import Header from '../../components/Header'
 import FeaturedPost from '../../components/FeaturedPost'
 import Posts from '../../components/Posts'
+import { Link } from 'react-router-dom'
 
 const Home = () =>{
   return(
@@ -9,6 +10,7 @@ const Home = () =>{
       <Header/>
       <FeaturedPost/>
       <Posts/>
+      <Link to='/panel'>oi</Link>
     </section>
   )
 }
