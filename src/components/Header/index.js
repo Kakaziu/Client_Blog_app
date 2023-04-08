@@ -19,7 +19,6 @@ const Header = () =>{
     <header className='header'>
       <div className='container'>
         <h2>MyBlog</h2>
-
         { !user.user ?
           <button onClick={() => setShowLinks(!showLinks)}>Cadastre-se</button> :
           <button onClick={handleLogout}>Logout</button>

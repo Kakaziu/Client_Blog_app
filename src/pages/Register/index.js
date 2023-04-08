@@ -54,41 +54,43 @@ const Register = (props) =>{
   }
 
   return(
-    <form className='form' onSubmit={handleSubmit}>
-      <h2>Cadastre-se como {props.title}</h2>
-      { serverError.length > 0 ?
-        serverError.map(( err => <p key={err} className='errors-server'>{err}</p> ))
-        : <></>}
-      <div className='camp'>
-        <label><FaUserAlt/></label>
-        <input
-          type='text'
-          placeholder='Nome'
-          onChange={(e) => setInputName({ value: e.target.value, error: '' })}
-          value={inputName.value}/>
-      </div>
-      { inputName.error ? <span className='error-message'>{inputName.error}</span> : <></> }
-      <div className='camp'>
-        <label><MdMail/></label>
-        <input
-          type='email'
-          placeholder='E-mail'
-          onChange={(e) => setInputEmail({ value: e.target.value, error: '' })}
-          value={inputEmail.value}></input>
-      </div>
-      { inputEmail.error ? <span className='error-message'>{inputEmail.error}</span> : <></> }
-      <div className='camp'>
-        <label><AiFillLock/></label>
-        <input
-          type='password'
-          placeholder='Senha'
-          onChange={(e) => setInputPassword({ value: e.target.value, error: '' })}
-          value={inputPassword.value}></input>
-      </div>
-      { inputPassword.error ? <span className='error-message'>{inputPassword.error}</span> : <></> }
-      <button>Cadastrar { loading ? <span><ReactLoading type='spin' width='15px' height='15px'/></span> : <></>}</button>
-      <span className='message-login'>Já tem uma conta? Faça <Link to='/login'>Login</Link></span>
-    </form>
+    <section id='register'>
+      <form className='form' onSubmit={handleSubmit}>
+        <h2>Cadastre-se como {props.title}</h2>
+        { serverError.length > 0 ?
+          serverError.map(( err => <p key={err} className='errors-server'>{err}</p> ))
+          : <></>}
+        <div className='camp'>
+          <label><FaUserAlt/></label>
+          <input
+            type='text'
+            placeholder='Nome'
+            onChange={(e) => setInputName({ value: e.target.value, error: '' })}
+            value={inputName.value}/>
+        </div>
+        { inputName.error ? <span className='error-message'>{inputName.error}</span> : <></> }
+        <div className='camp'>
+          <label><MdMail/></label>
+          <input
+            type='email'
+            placeholder='E-mail'
+            onChange={(e) => setInputEmail({ value: e.target.value, error: '' })}
+            value={inputEmail.value}></input>
+        </div>
+        { inputEmail.error ? <span className='error-message'>{inputEmail.error}</span> : <></> }
+        <div className='camp'>
+          <label><AiFillLock/></label>
+          <input
+            type='password'
+            placeholder='Senha'
+            onChange={(e) => setInputPassword({ value: e.target.value, error: '' })}
+            value={inputPassword.value}></input>
+        </div>
+        { inputPassword.error ? <span className='error-message'>{inputPassword.error}</span> : <></> }
+        <button>Cadastrar { loading ? <span><ReactLoading type='spin' width='15px' height='15px'/></span> : <></>}</button>
+        <span className='message-login'>Já tem uma conta? Faça <Link to='/login'>Login</Link></span>
+      </form>
+    </section>
   )
 }
 

@@ -50,31 +50,33 @@ const Login = () =>{
   }
 
   return(
-    <form className='form' onSubmit={handleSubmit}>
-      <h2>Login</h2>
-      { serverError.length > 0 ?
-        serverError.map(( err => <p key={err} className='errors-server'>{err}</p> ))
-        : <></>}
-      <div className='camp'>
-        <label><MdMail/></label>
-        <input
-          type='email'
-          placeholder='E-mail'
-          onChange={(e) => setInputEmail({ value: e.target.value, error: '' })}
-          value={inputEmail.value}></input>
-      </div>
-      { inputEmail.error ? <span className='error-message'>{inputEmail.error}</span> : <></> }
-      <div className='camp'>
-        <label><AiFillLock/></label>
-        <input
-          type='password'
-          placeholder='Senha'
-          onChange={(e) => setInputPassword({ value: e.target.value, error: '' })}
-          value={inputPassword.value}></input>
-      </div>
-      { inputPassword.error ? <span className='error-message'>{inputPassword.error}</span> : <></> }
-      <button>Login { user.loading ? <span><ReactLoading type='spin' width='15px' height='15px'/></span> : <></>}</button>
-    </form>
+    <section id='login'>
+      <form className='form' onSubmit={handleSubmit}>
+        <h2>Login</h2>
+        { serverError.length > 0 ?
+          serverError.map(( err => <p key={err} className='errors-server'>{err}</p> ))
+          : <></>}
+        <div className='camp'>
+          <label><MdMail/></label>
+          <input
+            type='email'
+            placeholder='E-mail'
+            onChange={(e) => setInputEmail({ value: e.target.value, error: '' })}
+            value={inputEmail.value}></input>
+        </div>
+        { inputEmail.error ? <span className='error-message'>{inputEmail.error}</span> : <></> }
+        <div className='camp'>
+          <label><AiFillLock/></label>
+          <input
+            type='password'
+            placeholder='Senha'
+            onChange={(e) => setInputPassword({ value: e.target.value, error: '' })}
+            value={inputPassword.value}></input>
+        </div>
+        { inputPassword.error ? <span className='error-message'>{inputPassword.error}</span> : <></> }
+        <button>Login { user.loading ? <span><ReactLoading type='spin' width='15px' height='15px'/></span> : <></>}</button>
+      </form>
+    </section>
   )
 }
 
