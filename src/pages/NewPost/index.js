@@ -7,6 +7,7 @@ const NewPost  = () =>{
   const [paragraphs, setParagraphs] = useState([])
   const [ title, setTitle ] = useState('') // eslint-disable-line
   const [description, setDescription] = useState('') // eslint-disable-line
+  const [isFinish, setIsFinish] = useState(false)
 
   function handleChange(e){
     const pictureImg = document.querySelector('.picture_image')
@@ -39,18 +40,30 @@ const NewPost  = () =>{
   }
 
   function saveParagraph(e, index){
+
+    if(isFinish){
+      toast.warn('Os parágrafos foram finalizados.')
+      return
+    }
+
     e.preventDefault()
     const btn = e.target
     const textarea = btn.previousSibling
 
     const paragraphRef = [...paragraphs]
 
-    paragraphRef.splice(index, 1, { content: textarea.value, saved: true })
+    paragraphRef.splice(index, 1, { content: textarea.value.trim(), saved: true })
 
     setParagraphs(paragraphRef)
   }
 
   function editParagraph(e, index){
+
+    if(isFinish){
+      toast.warn('Os parágrafos foram finalizados.')
+      return
+    }
+
     e.preventDefault()
 
     const paragraphRef = [...paragraphs]
@@ -64,6 +77,11 @@ const NewPost  = () =>{
   }
 
   function deleteParagraph(e, index){
+    if(isFinish){
+      toast.warn('Os parágrafos foram finalizados.')
+      return
+    }
+
     e.preventDefault()
 
     const paragraphRef = [...paragraphs]
@@ -74,12 +92,19 @@ const NewPost  = () =>{
   }
 
   function endPara(){
+
+    if(paragraphs.length === 0){
+      toast.warn('Sua postagem não tem parágrafos.')
+      return
+    }
+
     let paragraphsContent = paragraphs.map(paragraph =>{
       return paragraph.content
     })
-    const joinedParagraphs = paragraphsContent.join(' - ')
+    const joinedParagraphs = paragraphsContent.join('///')
 
     setDescription(joinedParagraphs)
+    setIsFinish(!isFinish)
   }
 
   function handleSubmit(e){
@@ -136,14 +161,19 @@ const NewPost  = () =>{
                   className={ paragraph.saved ? 'textarea textarea-saved' : 'textarea'}
                 ></textarea>
                 <button
-                  className={ paragraph.saved ? 'btn-saved' : 'btn-not-saved'}
-                  onClick={!paragraph.saved ? (e) => saveParagraph(e, index) : (e) => editParagraph(e, index)}>{ paragraph.saved ? 'Salvo' : 'Salvar'}</button>
+                  className={ paragraph.saved ? 'btn-action btn-saved' : 'btn-action btn-not-saved'}
+                  onClick={!paragraph.saved ? (e) => saveParagraph(e, index) : (e) => editParagraph(e, index)}>{ paragraph.saved ? 'Salvo' : 'Salvar'}
+                </button>
+                <button
+                  className={ paragraph.saved ? 'btn-action btn-remove-para' : 'none'}
+                  onClick={(e) => deleteParagraph(e, index)}
+                >Apagar</button>
               </label>
             )
           })}
           <div>
-            <button className='btn-para' onClick={addParagraph}>Adicionar parágrafo</button>
-            <button className='btn-para' onClick={endPara}>Finalizar</button>
+            <button className={isFinish ? 'btn-para-finish' : 'btn-para'} onClick={addParagraph}>Adicionar parágrafo</button>
+            <button className='btn-para' onClick={endPara}>{ isFinish ? 'Voltar' : 'Finalizar'}</button>
           </div>
           <input
             type='hidden'
