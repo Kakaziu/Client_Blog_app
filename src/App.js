@@ -1,5 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 import { Provider } from 'react-redux'
 import Home from './pages/Home'
 import './App.css'
@@ -23,6 +25,7 @@ const App = () =>{
             <Route path='/panel' element={<Auth><Author/></Auth>}/>
             <Route path='/post' element={<Auth><NewPost/></Auth>}/>
           </Routes>
+          <ToastContainer autoClose={3000}/>
         </div>
       </Provider>
     </BrowserRouter>

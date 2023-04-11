@@ -1,10 +1,12 @@
-import React, { useState } from 'react'  // eslint-disable-line
+import React, { useEffect, useState } from 'react'  // eslint-disable-line
+import { toast } from 'react-toastify'// eslint-disable-line
 import './style.css'
 
 const NewPost  = () =>{
 
-  const [paragraphNumbers, setParagraphNumbers] = useState(0)
   const [paragraphs, setParagraphs] = useState([])
+  const [ title, setTitle ] = useState('') // eslint-disable-line
+  const [description, setDescription] = useState('') // eslint-disable-line
 
   function handleChange(e){
     const pictureImg = document.querySelector('.picture_image')
@@ -33,8 +35,7 @@ const NewPost  = () =>{
   function addParagraph(e){
     e.preventDefault()
 
-    setParagraphNumbers((state) => state + 1)
-    setParagraphs([...paragraphs, ''])
+    setParagraphs([...paragraphs, { content: '', saved: false }])
   }
 
   function saveParagraph(e, index){
@@ -42,46 +43,116 @@ const NewPost  = () =>{
     const btn = e.target
     const textarea = btn.previousSibling
 
-    const paragraphRef = paragraphs
+    const paragraphRef = [...paragraphs]
 
-    paragraphRef.splice(index, 1, textarea.value)
+    paragraphRef.splice(index, 1, { content: textarea.value, saved: true })
 
-    btn.style.backgroundColor = 'rgb(93, 252, 93)'
-    btn.innerText = 'Salvo'
     setParagraphs(paragraphRef)
   }
 
-  console.log(paragraphs)
+  function editParagraph(e, index){
+    e.preventDefault()
+
+    const paragraphRef = [...paragraphs]
+
+    const paragraph = paragraphRef.filter((paragraph, id) => id === index)
+    const content = paragraph.content
+
+    paragraphRef.splice(index, 1, { content: content, saved: false })
+
+    setParagraphs(paragraphRef)
+  }
+
+  function deleteParagraph(e, index){
+    e.preventDefault()
+
+    const paragraphRef = [...paragraphs]
+
+    paragraphRef.splice(index, 1)
+
+    setParagraphs(paragraphRef)
+  }
+
+  function endPara(){
+    let paragraphsContent = paragraphs.map(paragraph =>{
+      return paragraph.content
+    })
+    const joinedParagraphs = paragraphsContent.join(' - ')
+
+    setDescription(joinedParagraphs)
+  }
+
+  function handleSubmit(e){
+    e.preventDefault()
+
+    // if(!title){
+    //   toast.warn('O campo "Título" está vazio.')
+    // }
+
+    // if(!description){
+    //   toast.warn('Seu post não tem parágrafos.')
+    // }
+
+    console.log(description)
+  }
 
   return(
     <section id='new-post'>
       <h1>Novo post</h1>
-      <form encType='multipart/form-data' className='form-post'>
+      <form
+        encType='multipart/form-data'
+        className='form-post'
+        onSubmit={handleSubmit}>
 
         <label className='picture' htmlFor='picture_input'>
           <span className='picture_image'>
             Escolha a imagem do post
           </span>
         </label>
-        <input type='file' accept='image/*' id='picture_input' onChange={handleChange}/>
+        <input
+          type='file'
+          accept='image/*'
+          id='picture_input'
+          onChange={handleChange}
+          name='photo_post_url'/>
 
         <label className='field'>
-          <input type='text' placeholder='Título'/>
+          <input
+            type='text'
+            placeholder='Título'
+            name='title'
+            onChange={(e) => setTitle(e.target.value)}
+            value={title}
+          />
         </label>
 
         <div className='paragraphs-area'>
           { paragraphs.map((paragraph, index) =>{
             return (
               <label className='field textarea-field' key={index}>
-                <textarea placeholder={`Parágrafo ${paragraphNumbers}`} data={index}></textarea>
-                <button className='btn-save-para' onClick={(e) => saveParagraph(e, index)}>Salvar</button>
+                <textarea
+                  placeholder={`Parágrafo ${index + 1}`}
+                  disabled={ paragraph.saved ? true : false}
+                  className={ paragraph.saved ? 'textarea textarea-saved' : 'textarea'}
+                ></textarea>
+                <button
+                  className={ paragraph.saved ? 'btn-saved' : 'btn-not-saved'}
+                  onClick={!paragraph.saved ? (e) => saveParagraph(e, index) : (e) => editParagraph(e, index)}>{ paragraph.saved ? 'Salvo' : 'Salvar'}</button>
               </label>
             )
           })}
-          <div>Adicionar parágrafo <button className='btn-add-para' onClick={addParagraph}>+</button></div>
+          <div>
+            <button className='btn-para' onClick={addParagraph}>Adicionar parágrafo</button>
+            <button className='btn-para' onClick={endPara}>Finalizar</button>
+          </div>
+          <input
+            type='hidden'
+            value={description}
+            name='description'
+          />
         </div>
 
-        <button>Postars</button>
+        <button className='submit-btn'>Postar</button>
       </form>
     </section>
   )
