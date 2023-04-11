@@ -9,7 +9,7 @@ import { logout } from '../../store/modules/user/userAction'
 const HeaderAuthor = () =>{
 
   const { user } = useSelector(user => user)
-  const [showNavDiv, setShowNavDiv] = useState(true)
+  const [showNavDiv, setShowNavDiv] = useState(false)
   const dispatch = useDispatch()
 
   function handleLogout(){
