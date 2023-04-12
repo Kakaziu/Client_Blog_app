@@ -1,12 +1,17 @@
 import React, { useEffect, useState } from 'react'  // eslint-disable-line
+import { useDispatch } from 'react-redux'
 import { toast } from 'react-toastify'// eslint-disable-line
 import './style.css'
+import { addPostRequest } from '../../store/modules/post/postActions' // eslint-disable-line
 
 const NewPost  = () =>{
+
+  const dispatch = useDispatch() // eslint-disable-line
 
   const [paragraphs, setParagraphs] = useState([])
   const [ title, setTitle ] = useState('') // eslint-disable-line
   const [description, setDescription] = useState('') // eslint-disable-line
+  const [photoFile, setPhotoFile] = useState('')
   const [isFinish, setIsFinish] = useState(false)
 
   function handleChange(e){
@@ -25,11 +30,13 @@ const NewPost  = () =>{
         img.classList.add('picture_img')
         pictureImg.innerHTML = ''
         pictureImg.appendChild(img)
+        setPhotoFile(file)
       })
 
       reader.readAsDataURL(file)
     }else{
       pictureImg.innerHTML = 'Escolha a imagem do post'
+      setPhotoFile(false)
     }
   }
 
@@ -91,7 +98,8 @@ const NewPost  = () =>{
     setParagraphs(paragraphRef)
   }
 
-  function endPara(){
+  function endPara(e){
+    e.preventDefault()
 
     if(paragraphs.length === 0){
       toast.warn('Sua postagem não tem parágrafos.')
@@ -107,18 +115,30 @@ const NewPost  = () =>{
     setIsFinish(!isFinish)
   }
 
-  function handleSubmit(e){
+  async function handleSubmit(e){
     e.preventDefault()
 
-    // if(!title){
-    //   toast.warn('O campo "Título" está vazio.')
-    // }
+    if(!photoFile){
+      toast.warn('O seu post não possui imagem')
+    }
 
-    // if(!description){
-    //   toast.warn('Seu post não tem parágrafos.')
-    // }
+    if(!title){
+      toast.warn('O campo "Título" está vazio.')
+    }
 
-    console.log(description)
+    if(!description){
+      toast.warn('Seu post não tem parágrafos.')
+    }
+
+
+    const formData = new FormData()
+    formData.append('title', title)
+    formData.append('description', description)
+    formData.append('photo_post_url', photoFile)
+
+    if(photoFile && title && description){
+      dispatch(addPostRequest(formData))
+    }
   }
 
   return(

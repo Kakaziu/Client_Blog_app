@@ -23,7 +23,7 @@ const Login = () =>{
     }
 
     if(user.user){
-      navigate('/')
+      navigate('/panel')
     }
   })
 
