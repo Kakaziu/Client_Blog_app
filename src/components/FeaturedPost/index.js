@@ -42,10 +42,10 @@ const FeaturedPost = (props) =>{
 }
 
 
-FeaturedPost.PropTypes = {
-  formatDate: PropTypes.string,
-  formatDescription: PropTypes.string,
-  posts: PropTypes.object
+FeaturedPost.propTypes = {
+  formatDate: PropTypes.func,
+  formatDescription: PropTypes.func,
+  posts: PropTypes.array
 }
 
 export default FeaturedPost

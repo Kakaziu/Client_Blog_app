@@ -1,39 +1,43 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import PropTypes from 'prop-types'
 import './style.css'
 
-const Posts = () =>{
+const Posts = (props) =>{
+
+  const { posts } = props
+  const [postsLoader, setPostsLoader] = useState(false)
+
+  useEffect(() =>{
+    if(posts.length > 0){
+      setPostsLoader(true)
+      console.log(posts)
+    }
+  }, [posts])
+
   return(
     <div className="posts">
-      <div className='post'>
-        <img src='./assets/img/gabigol.jpg'/>
-        <div className='post-content'>
-          <div>
-            <h2>Gabigol revela conversa com Vitor Pereira</h2>
-            <span>De 1 dia atrás</span>
+      { postsLoader ? posts.map((post) =>{
+        return (
+          <div className='post' key={post.id}>
+            <img src={post.photo_post_url}/>
+            <div className='post-content'>
+              <div>
+                <h2>{post.title}</h2>
+                <span>{props.formatDate(post.created_at)}</span>
+              </div>
+              <p>{props.formatDescription(post.description)}</p>
+            </div>
           </div>
-          <p>Em uma entrevista coletiva antes do jogo do Flamengo contra o Bangu,
-            válido pelo Campeonato Carioca, Gabigol falou sobre a sua preferência
-            em atuar como um centroavante fixo, posicionado dentro da área adversária.
-            O atacante afirmou que se sente mais à vontade nessa posição e que tem conseguido
-            ter um bom desempenho jogando assim...</p>
-        </div>
-      </div>
-      <div className='post'>
-        <img src='./assets/img/gabigol.jpg'/>
-        <div className='post-content'>
-          <div>
-            <h2>Gabigol revela conversa com Vitor Pereira</h2>
-            <span>De 1 dia atrás</span>
-          </div>
-          <p>Em uma entrevista coletiva antes do jogo do Flamengo contra o Bangu,
-            válido pelo Campeonato Carioca, Gabigol falou sobre a sua preferência
-            em atuar como um centroavante fixo, posicionado dentro da área adversária.
-            O atacante afirmou que se sente mais à vontade nessa posição e que tem conseguido
-            ter um bom desempenho jogando assim...</p>
-        </div>
-      </div>
+        )
+      }) : ''}
     </div>
   )
+}
+
+Posts.propTypes = {
+  formatDate: PropTypes.func,
+  formatDescription: PropTypes.func,
+  posts: PropTypes.array
 }
 
 export default Posts
