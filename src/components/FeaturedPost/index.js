@@ -28,6 +28,39 @@ const FeaturedPost = () =>{
     return posts[random]
   }
 
+  function formatDescription(description){
+    if(description.length > 200){
+      description.slice(200)
+
+      return description + '...'
+    }
+  }
+
+  function formatDate(date){
+    const data = new Date() //eslint-disable-line
+    const actualYear = data.getFullYear()
+    const actualMonth = data.getMonth() + 1
+    const actualDay = data.getDate()
+
+    const creationYear = Number(date.slice(0, 4))
+    const creationMonth = Number(date.slice(5, 7))
+    const creationDay = Number(date.slice(8, 10))
+
+    if(actualYear !== creationYear){
+      return `a ${actualYear - creationYear} anos atrás`
+    }
+
+    if(actualMonth !== creationMonth){
+      return `a ${actualMonth - creationMonth} meses atrás`
+    }
+
+
+
+    return `a ${actualDay - creationDay} dias atrás`
+  }
+
+  console.log(formatDate('2023-04-12T02:00:59.000Z'))
+
   return(
     <>
       {postsLoader && (
@@ -36,10 +69,10 @@ const FeaturedPost = () =>{
           <div className="content-featured-post">
             <div>
               <h1>{randomPost.title}</h1>
-              <span>De 2 dias atrás</span>
+              <span>{formatDate(randomPost.created_at)}</span>
             </div>
 
-            <p>{randomPost.description}</p>
+            <p>{formatDescription(randomPost.description)}</p>
           </div>
         </div>
       )}
