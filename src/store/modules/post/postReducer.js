@@ -1,17 +1,21 @@
 const initialState = {
-  post: null,
+  posts: [],
   error: null,
   loading: false
 }
 
-export default function postReducer(state = initialState, action){
+export default function PostReducer(state = initialState, action){
   switch(action.type){
+  case 'GET_POSTS_REQUEST':
+    return state = { posts: state.posts, error: null, loading: true }
+  case 'GET_POSTS_SUCCESS':
+    return state = { posts: action.payload, error: null, loading: false }
   case 'ADD_POST_REQUEST':
-    return state = { post: null, error: null, loading: true }
+    return state = { posts: state.posts, error: null, loading: true }
   case 'ADD_POST_SUCCESS':
-    return state = { post: action.payload, error: null, loading: false }
+    return state = { posts: [...state.posts, action.payload], error: null, loading: false }
   case 'ADD_POST_FAILURE':
-    return state = { post: null, error: action.payload, loading: false }
+    return state = { posts: state.posts, error: action.payload, loading: false }
   default:
     return state
   }

@@ -8,7 +8,7 @@ import { logout } from '../../store/modules/user/userAction'
 
 const HeaderAuthor = () =>{
 
-  const { user } = useSelector(user => user)
+  const { user } = useSelector(state => state.UserReducer)
   const [showNavDiv, setShowNavDiv] = useState(false)
   const dispatch = useDispatch()
 

@@ -6,7 +6,7 @@ import { logout } from '../../store/modules/user/userAction'
 
 const Header = () =>{
   const [showLinks, setShowLinks] = useState(false)
-  const user = useSelector(state => state)
+  const user = useSelector(state => state.UserReducer)
   const dispatch = useDispatch()
 
   function handleLogout(){

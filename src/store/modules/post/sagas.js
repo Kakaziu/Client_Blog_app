@@ -1,14 +1,25 @@
 import { all, call, takeLatest, put } from 'redux-saga/effects'
 import {toast} from 'react-toastify'
 import api from '../../../services/api'
-import { addPostSuccess, addPostFailure } from './postActions'
+import { addPostSuccess, addPostFailure, getPostsSuccess } from './postActions'
+
+function* getPosts(){
+  try{
+    const response = yield call(api.get, '/posts')
+
+    yield put(getPostsSuccess(response.data))
+  }catch(e){
+    toast.error('Não foi possível pegar os posts')
+  }
+}
 
 function* addPost(data){
   try{
     const response = yield call(api.post, '/posts', data.payload, {
       headers: { 'Content-Type': 'multipart/form-data' }
     })
-    console.log(response.data)
+
+
     yield put(addPostSuccess(response.data))
   }catch(e){
     console.log(e)
@@ -18,5 +29,6 @@ function* addPost(data){
 }
 
 export default all([
-  takeLatest('ADD_POST_REQUEST', addPost)
+  takeLatest('ADD_POST_REQUEST', addPost),
+  takeLatest('GET_POSTS_REQUEST', getPosts)
 ])

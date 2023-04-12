@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux'
 import { Navigate } from 'react-router-dom'
 
 const Auth = ({children}) =>{
-  const {user} = useSelector(state => state)
+  const userState = useSelector(state => state.UserReducer)
+  const { user } = userState
 
   if(!user){
     return <Navigate to='/'></Navigate>

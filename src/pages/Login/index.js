@@ -12,7 +12,7 @@ const Login = () =>{
 
   const navigate = useNavigate()
   const dispatch = useDispatch()
-  const user = useSelector(state => state)
+  const user = useSelector(state => state.UserReducer)
   const [inputEmail, setInputEmail] = useState({ value: '', error: ''})
   const [inputPassword, setInputPassword] = useState({ value: '', error: ''})
   const [serverError, setServerError] = useState([])

@@ -1,16 +1,18 @@
-import React, { useEffect, useState } from 'react'  // eslint-disable-line
+import React, { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { toast } from 'react-toastify'// eslint-disable-line
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import './style.css'
-import { addPostRequest } from '../../store/modules/post/postActions' // eslint-disable-line
+import { addPostRequest } from '../../store/modules/post/postActions'
 
 const NewPost  = () =>{
 
-  const dispatch = useDispatch() // eslint-disable-line
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
 
   const [paragraphs, setParagraphs] = useState([])
-  const [ title, setTitle ] = useState('') // eslint-disable-line
-  const [description, setDescription] = useState('') // eslint-disable-line
+  const [ title, setTitle ] = useState('')
+  const [description, setDescription] = useState('')
   const [photoFile, setPhotoFile] = useState('')
   const [isFinish, setIsFinish] = useState(false)
 
@@ -106,6 +108,15 @@ const NewPost  = () =>{
       return
     }
 
+    const hasNotSavedParagraph = paragraphs.find((paragraph) => {
+      return !paragraph.saved
+    })
+
+    if(hasNotSavedParagraph){
+      toast.warn('há parágrafos não salvos')
+      return
+    }
+
     let paragraphsContent = paragraphs.map(paragraph =>{
       return paragraph.content
     })
@@ -138,6 +149,7 @@ const NewPost  = () =>{
 
     if(photoFile && title && description){
       dispatch(addPostRequest(formData))
+      navigate('/panel')
     }
   }
 

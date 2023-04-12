@@ -1,12 +1,17 @@
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, combineReducers } from 'redux'
 import createSagaMiddleware from 'redux-saga'
 import rootSaga from './modules/rootSaga'
 
 import UserReducer from './modules/user/userReducer'
+import PostReducer from './modules/post/postReducer'
 
 const sagaMiddleware = createSagaMiddleware()
 
-const store = createStore(UserReducer, applyMiddleware(sagaMiddleware))
+const allReducers = combineReducers({
+  UserReducer,
+  PostReducer
+})
+const store = createStore(allReducers, applyMiddleware(sagaMiddleware))
 
 sagaMiddleware.run(rootSaga)
 

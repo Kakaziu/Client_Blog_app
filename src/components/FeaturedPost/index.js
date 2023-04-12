@@ -1,25 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import './style.css'
+import { useDispatch, useSelector } from 'react-redux'
+import { getPostsRequest } from '../../store/modules/post/postActions'
 
 const FeaturedPost = () =>{
+
+  const dispatch = useDispatch()
+  const postsState = useSelector(state => state.PostReducer)
+  const { posts } = postsState
+  const [randomPost, setRandomPost] = useState({})
+  const [postsLoader, setPostsLoader] = useState(false)
+
+  useEffect(() =>{
+    dispatch(getPostsRequest)
+  }, [])
+
+  useEffect(() =>{
+    if(posts.length > 0){
+      setPostsLoader(true)
+      setRandomPost(getRandomPost(posts))
+    }
+  }, [posts])
+
+  function getRandomPost(posts){
+    const random = Math.floor(Math.random() * posts.length)
+
+    return posts[random]
+  }
+
   return(
     <>
-      <div className="featured-post">
-        <img src='./assets/img/23118_0.jpg'/>
-        <div className='content-featured-post'>
-          <div>
-            <h1>Javascript e suas atualizações</h1>
-            <span>De 2 dias atrás</span>
-          </div>
+      {postsLoader && (
+        <div className="featured-post">
+          <img src={randomPost.photo_post_url} />
+          <div className="content-featured-post">
+            <div>
+              <h1>{randomPost.title}</h1>
+              <span>De 2 dias atrás</span>
+            </div>
 
-          <p>O JavaScript é uma das linguagens de programação mais populares do mundo,
-          utilizada por desenvolvedores em todo o mundo para criar aplicativos web
-          interativos e dinâmicos. Com o tempo, o JavaScript evoluiu bastante, e suas
-          atualizações mais recentes trazem novas funcionalidades e melhorias para a
-          linguagem... <br></br><br></br></p>
+            <p>{randomPost.description}</p>
+          </div>
         </div>
-      </div>
-      <hr className='line-post'></hr>
+      )}
+      <hr className="line-post" />
     </>
   )
 }
