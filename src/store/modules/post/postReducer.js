@@ -16,6 +16,10 @@ export default function PostReducer(state = initialState, action){
     return state = { posts: [...state.posts, action.payload], error: null, loading: false }
   case 'ADD_POST_FAILURE':
     return state = { posts: state.posts, error: action.payload, loading: false }
+  case 'DELETE_POST':
+    return state = { posts: state.posts.filter(post =>{
+      return post.id !== action.payload
+    }), error: null, loading: false}
   default:
     return state
   }

@@ -1,7 +1,7 @@
 import { all, call, takeLatest, put } from 'redux-saga/effects'
 import {toast} from 'react-toastify'
 import api from '../../../services/api'
-import { addPostSuccess, addPostFailure, getPostsSuccess } from './postActions'
+import { addPostSuccess, addPostFailure, getPostsSuccess, deletePostSuccess } from './postActions'
 
 function* getPosts(){
   try{
@@ -28,7 +28,19 @@ function* addPost(data){
   }
 }
 
+function* deletePost({ payload }){
+  try{
+    const response = yield call(api.delete, `/posts/${payload}`)
+
+    toast.success(response.data.msg)
+    yield put(deletePostSuccess(response.data.msg))
+  }catch(e){
+    yield toast.error('Não foi possível apagar o post.')
+  }
+}
+
 export default all([
   takeLatest('ADD_POST_REQUEST', addPost),
-  takeLatest('GET_POSTS_REQUEST', getPosts)
+  takeLatest('GET_POSTS_REQUEST', getPosts),
+  takeLatest('DELETE_POST_REQUEST', deletePost)
 ])

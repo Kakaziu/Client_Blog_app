@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
 import './style.css'
 import { useDispatch, useSelector } from 'react-redux'
-import { getPostsRequest } from '../../store/modules/post/postActions'
+import { getPostsRequest, deletePostRequest } from '../../store/modules/post/postActions'
 
 const PostsAuthor = () =>{
 
@@ -14,7 +14,7 @@ const PostsAuthor = () =>{
 
   useEffect(() =>{
     dispatch(getPostsRequest)
-  }, [])
+  }, [posts])
 
   useEffect(() =>{
     if(posts.length > 0){
@@ -47,7 +47,7 @@ const PostsAuthor = () =>{
               <h3>{formatTitle(post.title)}</h3>
               <div className='icon-actions'>
                 <AiFillEdit color='blue' size='22' cursor='pointer'/>
-                <AiFillDelete color='red' size='22' cursor='pointer'/>
+                <AiFillDelete color='red' size='22' cursor='pointer' onClick={() => dispatch(deletePostRequest(post.id))}/>
               </div>
             </div>
           )
