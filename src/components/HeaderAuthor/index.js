@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { GoKebabVertical } from 'react-icons/go'
@@ -9,8 +9,20 @@ import { logout } from '../../store/modules/user/userAction'
 const HeaderAuthor = () =>{
 
   const { user } = useSelector(state => state.UserReducer)
+  const { posts } = useSelector(state => state.PostReducer)
+  const [postsLoader, setPostsLoader] = useState(false)
+  const [postsUser, setPostsUser] = useState([])
   const [showNavDiv, setShowNavDiv] = useState(false)
   const dispatch = useDispatch()
+
+  useEffect(() =>{
+    if(posts.length > 0){
+      setPostsLoader(true)
+
+      const filteredPosts = posts.filter(post => post.create_by === user.id)
+      setPostsUser(filteredPosts)
+    }
+  }, [posts])
 
   function handleLogout(){
     dispatch(logout)
@@ -32,7 +44,7 @@ const HeaderAuthor = () =>{
 
       { showNavDiv
         ?  <div className={ showNavDiv ? 'actions actions-show' : 'actions'}>
-          <span>Posts feitos: 0</span>
+          <span>{ postsLoader && `Posts Feitos: ${postsUser.length}` }</span>
           <hr></hr>
           <Link to="/post">Criar novo post</Link>
           <hr></hr>

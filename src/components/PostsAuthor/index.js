@@ -3,10 +3,12 @@ import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
 import './style.css'
 import { useDispatch, useSelector } from 'react-redux'
 import { getPostsRequest, deletePostRequest } from '../../store/modules/post/postActions'
+import { useNavigate } from 'react-router-dom'
 
 const PostsAuthor = () =>{
 
   const dispatch = useDispatch()
+  const navigate = useNavigate()
   const { posts } = useSelector(state => state.PostReducer)
   const { user } = useSelector(state => state.UserReducer)
   const [postsLoader, setPostsLoader] = useState(false)
@@ -46,7 +48,7 @@ const PostsAuthor = () =>{
               <img src={post.photo_post_url}/>
               <h3>{formatTitle(post.title)}</h3>
               <div className='icon-actions'>
-                <AiFillEdit color='blue' size='22' cursor='pointer'/>
+                <AiFillEdit color='blue' size='22' cursor='pointer' onClick={() => navigate(`/post/${post.id}`)}/>
                 <AiFillDelete color='red' size='22' cursor='pointer' onClick={() => dispatch(deletePostRequest(post.id))}/>
               </div>
             </div>

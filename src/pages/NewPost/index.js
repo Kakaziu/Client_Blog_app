@@ -1,20 +1,46 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
+import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import './style.css'
-import { addPostRequest } from '../../store/modules/post/postActions'
+import { addPostRequest, editPostRequest } from '../../store/modules/post/postActions'
+import api from '../../services/api'
 
-const NewPost  = () =>{
+const NewPost = (props) =>{
 
   const dispatch = useDispatch()
   const navigate = useNavigate()
+  const { id } = useParams()
 
   const [paragraphs, setParagraphs] = useState([])
-  const [ title, setTitle ] = useState('')
+  const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
   const [photoFile, setPhotoFile] = useState('')
   const [isFinish, setIsFinish] = useState(false)
+  const [caughtPost, setCaughtPost] = useState(null)
+  const [loading, setLoading] = useState(true)  // eslint-disable-line
+
+  useEffect(() =>{
+    getPost()
+    setLoading(false)
+  }, [])
+
+  useEffect(() =>{
+    if(caughtPost){
+      setTitle(caughtPost.title)
+      setPhotoFile(caughtPost.photo_post_url)
+
+      const caughtParagraphs = caughtPost.description.split('///')
+      let setCaughtParagraphs = []
+
+      caughtParagraphs.forEach((paragraph) =>{
+        setCaughtParagraphs.push({ content: paragraph, saved: false })
+      })
+
+      setParagraphs(setCaughtParagraphs)
+    }
+  }, [caughtPost])
 
   function handleChange(e){
     const pictureImg = document.querySelector('.picture_image')
@@ -60,6 +86,11 @@ const NewPost  = () =>{
     const textarea = btn.previousSibling
 
     const paragraphRef = [...paragraphs]
+
+    if(!textarea.value){
+      toast.error('Não pode salvar parágrafos vazios.')
+      return
+    }
 
     paragraphRef.splice(index, 1, { content: textarea.value.trim(), saved: true })
 
@@ -126,7 +157,7 @@ const NewPost  = () =>{
     setIsFinish(!isFinish)
   }
 
-  async function handleSubmit(e){
+  function handleSubmit(e){
     e.preventDefault()
 
     if(!photoFile){
@@ -143,13 +174,24 @@ const NewPost  = () =>{
 
 
     const formData = new FormData()
+
     formData.append('title', title)
     formData.append('description', description)
     formData.append('photo_post_url', photoFile)
 
     if(photoFile && title && description){
-      dispatch(addPostRequest(formData))
+      props.isEdit ? dispatch(editPostRequest(formData, id)) : dispatch(addPostRequest(formData))
       navigate('/panel')
+    }
+  }
+
+  async function getPost(){
+    try{
+      const response = await api.get(`/posts/${id}`)
+
+      setCaughtPost(response.data)
+    }catch(e){
+      return null
     }
   }
 
@@ -163,7 +205,7 @@ const NewPost  = () =>{
 
         <label className='picture' htmlFor='picture_input'>
           <span className='picture_image'>
-            Escolha a imagem do post
+            { !loading ? <img src={photoFile} className='picture_img'/> : 'Escolha uma imagem para o post'}
           </span>
         </label>
         <input
@@ -178,8 +220,8 @@ const NewPost  = () =>{
             type='text'
             placeholder='Título'
             name='title'
-            onChange={(e) => setTitle(e.target.value)}
             value={title}
+            onChange={(e) => setTitle(e.target.value)}
           />
         </label>
 
@@ -191,6 +233,7 @@ const NewPost  = () =>{
                   placeholder={`Parágrafo ${index + 1}`}
                   disabled={ paragraph.saved ? true : false}
                   className={ paragraph.saved ? 'textarea textarea-saved' : 'textarea'}
+                  defaultValue={paragraph.content}
                 ></textarea>
                 <button
                   className={ paragraph.saved ? 'btn-action btn-saved' : 'btn-action btn-not-saved'}
@@ -218,6 +261,10 @@ const NewPost  = () =>{
       </form>
     </section>
   )
+}
+
+NewPost.propTypes = {
+  isEdit: PropTypes.bool
 }
 
 export default NewPost

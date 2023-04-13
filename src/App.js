@@ -23,7 +23,8 @@ const App = () =>{
             <Route path='/register/author' element={<Register admin={true} title='Autor'/>}/>
             <Route path='/login' element={<Login/>}/>
             <Route path='/panel' element={<Auth><Author/></Auth>}/>
-            <Route path='/post' element={<Auth><NewPost/></Auth>}/>
+            <Route path='/post' element={<Auth><NewPost isEdit={false}/></Auth>}/>
+            <Route path='/post/:id' element={<Auth><NewPost isEdit={true}/></Auth>}/>
           </Routes>
           <ToastContainer autoClose={3000}/>
         </div>

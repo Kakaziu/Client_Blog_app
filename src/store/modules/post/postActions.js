@@ -7,3 +7,7 @@ export const addPostFailure = (error) => { return { type: 'ADD_POST_FAILURE', pa
 
 export const deletePostRequest = (id) => { return { type: 'DELETE_POST_REQUEST', payload: id } }
 export const deletePostSuccess = (id) => { return { type: 'DELETE_POST', payload: id }}
+
+export const editPostRequest = (post, id) => { return { type: 'EDIT_POST_REQUEST', payload: { post: post, id: id } } }
+export const editPostSuccess = (post) => { return { type: 'EDIT_POST_SUCCESS', payload: post }}
+export const editPostFailure = (error) => { return { type: 'EDIT_POST_FAILURE', payload: error } }

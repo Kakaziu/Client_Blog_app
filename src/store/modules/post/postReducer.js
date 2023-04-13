@@ -11,7 +11,7 @@ export default function PostReducer(state = initialState, action){
   case 'GET_POSTS_SUCCESS':
     return state = { posts: action.payload, error: null, loading: false }
   case 'ADD_POST_REQUEST':
-    return state = { posts: state.posts, error: null, loading: true }
+    return state = { posts: [...state.posts], error: null, loading: true }
   case 'ADD_POST_SUCCESS':
     return state = { posts: [...state.posts, action.payload], error: null, loading: false }
   case 'ADD_POST_FAILURE':
@@ -20,6 +20,12 @@ export default function PostReducer(state = initialState, action){
     return state = { posts: state.posts.filter(post =>{
       return post.id !== action.payload
     }), error: null, loading: false}
+  case 'EDIT_POST_REQUEST':
+    return state = { posts: [...state.posts], error: null, loading: true }
+  case 'EDIT_POST_SUCCESS':
+    return state = { posts: [...state.posts], error: null, loading: false }
+  case 'EDIT_POST_FAILURE':
+    return state = { posts: [...state.posts], error: action.payload, loading: false }
   default:
     return state
   }

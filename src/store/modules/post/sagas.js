@@ -1,7 +1,13 @@
 import { all, call, takeLatest, put } from 'redux-saga/effects'
 import {toast} from 'react-toastify'
 import api from '../../../services/api'
-import { addPostSuccess, addPostFailure, getPostsSuccess, deletePostSuccess } from './postActions'
+import { addPostSuccess,
+  addPostFailure,
+  getPostsSuccess,
+  deletePostSuccess,
+  editPostSuccess,
+  editPostFailure
+} from './postActions'
 
 function* getPosts(){
   try{
@@ -39,8 +45,21 @@ function* deletePost({ payload }){
   }
 }
 
+function* editPost({ payload }){
+  try{
+    yield call(api.put, `/posts/${payload.id}`, payload.post, {
+      headers: { 'Content-Type': 'multipart/form-data' }
+    })
+
+    yield put(editPostSuccess())
+  }catch(e){
+    yield put(editPostFailure(e.response.data.errors))
+  }
+}
+
 export default all([
   takeLatest('ADD_POST_REQUEST', addPost),
   takeLatest('GET_POSTS_REQUEST', getPosts),
-  takeLatest('DELETE_POST_REQUEST', deletePost)
+  takeLatest('DELETE_POST_REQUEST', deletePost),
+  takeLatest('EDIT_POST_REQUEST', editPost)
 ])
