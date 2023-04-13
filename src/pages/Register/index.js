@@ -42,6 +42,7 @@ const Register = (props) =>{
           navigate('/')
         }
       }catch(e){
+        setLoading(false)
         setServerError(e.response.data.errors)
       }
     }

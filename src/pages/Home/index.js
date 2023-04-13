@@ -38,11 +38,13 @@ const Home = () =>{
   }
 
   function formatDescription(description){
-    if(description.length > 200){
-      description.slice(200)
+    if(description.length > 300){
+      const resumeDescription = description.slice(0, 300)
 
-      return description + '...'
+      return resumeDescription + '...'
     }
+
+    return description
   }
 
   return(

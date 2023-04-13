@@ -10,7 +10,6 @@ const Posts = (props) =>{
   useEffect(() =>{
     if(posts.length > 0){
       setPostsLoader(true)
-      console.log(posts)
     }
   }, [posts])
 

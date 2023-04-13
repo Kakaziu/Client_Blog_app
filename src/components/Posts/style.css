@@ -10,19 +10,19 @@
 }
 
 .post img{
-  width: 250px;
+  width: 280px;
   border-radius: 4px;
 }
 
 .post-content{
-  margin-left: 20px;
+  margin-left: 30px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: space-around;
 }
 
 .post-content h2{
-  font-size: 20px;
+  font-size: 22px;
 }
 
 .post-content span{
@@ -32,7 +32,7 @@
 }
 
 .post-content p{
-  font-size: 15px;
+  font-size: 17px;
   color: #adadad;
 }
 

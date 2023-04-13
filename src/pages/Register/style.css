@@ -6,11 +6,11 @@
   box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.479);
   padding: 30px;
   border-radius: 4px;
-  width: 350px;
+  width: 450px;
 }
 
 .form h2{
-  font-size: 22px;
+  font-size: 24px;
   margin-bottom: 20px;
   text-align: center;
 }
@@ -24,12 +24,12 @@
 .camp label{
   position: absolute;
   top: 55%;
-  left: 4%;
+  left: 3%;
 }
 
 .camp input{
   border-radius: 4px;
-  font-size: 16px;
+  font-size: 18px;
   outline: 0;
   padding: 8px 20px 8px 40px;
   border: none;
@@ -38,7 +38,7 @@
 }
 
 .error-message{
-  font-size: 13px;
+  font-size: 15px;
   color: red;
   margin-left: 5px;
 }
@@ -46,11 +46,11 @@
 .form button{
   width: 100%;
   margin-top: 30px;
-  padding: 8px 0px;
+  padding: 10px 0px;
   border-radius: 4px;
   background-color: black;
   color: white;
-  font-size: 17px;
+  font-size: 19px;
   font-weight: bold;
   border: none;
   cursor: pointer;

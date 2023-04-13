@@ -26,7 +26,7 @@ const HeaderAuthor = () =>{
 
         <div className='panel-nav'>
           <span>Olá, {user.name}</span>
-          <button onClick={() => setShowNavDiv(!showNavDiv)}><GoKebabVertical size='22'/></button>
+          <button onClick={() => setShowNavDiv(!showNavDiv)}><GoKebabVertical size='25'/></button>
         </div>
       </div>
 
