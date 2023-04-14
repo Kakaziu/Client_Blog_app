@@ -34,7 +34,7 @@ const Home = () =>{
       return `a ${actualMonth - creationMonth} meses atrás`
     }
 
-    return `a ${actualDay - creationDay} dias atrás`
+    return `Postado a ${actualDay - creationDay} dias atrás`
   }
 
   function formatDescription(description){

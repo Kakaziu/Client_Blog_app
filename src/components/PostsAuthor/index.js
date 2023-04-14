@@ -48,8 +48,8 @@ const PostsAuthor = () =>{
               <img src={post.photo_post_url}/>
               <h3>{formatTitle(post.title)}</h3>
               <div className='icon-actions'>
-                <AiFillEdit color='blue' size='22' cursor='pointer' onClick={() => navigate(`/post/${post.id}`)}/>
-                <AiFillDelete color='red' size='22' cursor='pointer' onClick={() => dispatch(deletePostRequest(post.id))}/>
+                <AiFillEdit size='22' className='icon-post icon-edit' onClick={() => navigate(`/post/${post.id}`)}/>
+                <AiFillDelete size='22' className='icon-post icon-delete' cursor='pointer' onClick={() => dispatch(deletePostRequest(post.id))}/>
               </div>
             </div>
           )

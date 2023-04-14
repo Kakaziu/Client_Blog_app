@@ -15,6 +15,8 @@ const Header = () =>{
     window.location.href = '/'
   }
 
+  console.log(user)
+
   return(
     <header className='header'>
       <div className='container'>
