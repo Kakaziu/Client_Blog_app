@@ -1,5 +1,6 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { useEffect } from 'react'
 import { ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
 import { Provider } from 'react-redux'
@@ -13,8 +14,18 @@ import Author from './pages/Author'
 import Auth from './components/Auth'
 import NewPost from './pages/NewPost'
 import ViewPost from './pages/ViewPost'
+import api from './services/api'
 
 const App = () =>{
+
+  useEffect(() =>{
+    const token = localStorage.getItem('token')
+
+    if(token){
+      api.defaults.headers.common['authorization'] = token
+    }
+  }, [])
+
   return (
     <BrowserRouter>
       <Provider store={store}>
