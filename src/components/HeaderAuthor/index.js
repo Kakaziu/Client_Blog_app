@@ -48,6 +48,8 @@ const HeaderAuthor = () =>{
           <hr></hr>
           <Link to="/post">Criar novo post</Link>
           <hr></hr>
+          <Link to='/'>Voltar para Home</Link>
+          <hr></hr>
           <button onClick={handleLogout}>Logout</button>
         </div>
         :

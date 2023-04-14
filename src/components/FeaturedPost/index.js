@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import './style.css'
 
@@ -24,17 +25,19 @@ const FeaturedPost = (props) =>{
   return(
     <>
       {postsLoader && (
-        <div className="featured-post">
-          <img src={randomPost.photo_post_url} />
-          <div className="content-featured-post">
-            <div>
-              <h1>{randomPost.title}</h1>
-              <span>{props.formatDate(randomPost.created_at)}</span>
-            </div>
+        <Link to={`/read/${randomPost.id}`} className='link-featured-post'>
+          <div className="featured-post">
+            <img src={randomPost.photo_post_url} />
+            <div className="content-featured-post">
+              <div>
+                <h1>{randomPost.title}</h1>
+                <span>{props.formatDate(randomPost.created_at)}</span>
+              </div>
 
-            <p>{props.formatDescription(randomPost.description)}</p>
+              <p>{props.formatDescription(randomPost.description)}</p>
+            </div>
           </div>
-        </div>
+        </Link>
       )}
       <hr className="line-post" />
     </>

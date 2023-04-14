@@ -1,5 +1,11 @@
-.featured-post{
+.link-featured-post{
   width: 90%;
+  margin: auto;
+  display: block;
+}
+
+.featured-post{
+  width: 100%;
   margin: auto;
   margin-top: 40px;
   display: flex;

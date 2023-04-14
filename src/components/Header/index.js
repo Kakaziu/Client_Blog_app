@@ -6,7 +6,7 @@ import { logout } from '../../store/modules/user/userAction'
 
 const Header = () =>{
   const [showLinks, setShowLinks] = useState(false)
-  const user = useSelector(state => state.UserReducer)
+  const { user } = useSelector(state => state.UserReducer)
   const dispatch = useDispatch()
 
   function handleLogout(){
@@ -15,15 +15,17 @@ const Header = () =>{
     window.location.href = '/'
   }
 
-  console.log(user)
-
   return(
     <header className='header'>
       <div className='container'>
         <h2>MyBlog</h2>
-        { !user.user ?
+        { !user ?
           <button onClick={() => setShowLinks(!showLinks)}>Cadastre-se</button> :
-          <button onClick={handleLogout}>Logout</button>
+          <div>
+            { user.is_admin ? <Link to='/panel'>Ir para o painel</Link> : ''}
+            <button onClick={handleLogout}>Logout</button>
+          </div>
+
         }
         { showLinks ? <div className={showLinks ? 'links links-show' : 'links'}>
           <Link to='/register/reader'>Cadastre-se como leitor</Link>

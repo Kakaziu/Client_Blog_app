@@ -12,6 +12,7 @@ import { store, persistor } from './store'
 import Author from './pages/Author'
 import Auth from './components/Auth'
 import NewPost from './pages/NewPost'
+import ViewPost from './pages/ViewPost'
 
 const App = () =>{
   return (
@@ -24,6 +25,7 @@ const App = () =>{
               <Route path='/register/reader' element={<Register admin={false} title='Leitor'/>}/>
               <Route path='/register/author' element={<Register admin={true} title='Autor'/>}/>
               <Route path='/login' element={<Login/>}/>
+              <Route path='/read/:id' element={<ViewPost/>}/>
               <Route path='/panel' element={<Auth><Author/></Auth>}/>
               <Route path='/post' element={<Auth><NewPost isEdit={false}/></Auth>}/>
               <Route path='/post/:id' element={<Auth><NewPost isEdit={true}/></Auth>}/>

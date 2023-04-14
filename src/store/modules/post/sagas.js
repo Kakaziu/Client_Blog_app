@@ -51,6 +51,7 @@ function* editPost({ payload }){
       headers: { 'Content-Type': 'multipart/form-data' }
     })
 
+    toast.success('Post editado.')
     yield put(editPostSuccess())
   }catch(e){
     yield put(editPostFailure(e.response.data.errors))

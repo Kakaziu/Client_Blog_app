@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types'
 import './style.css'
 
@@ -17,16 +18,18 @@ const Posts = (props) =>{
     <div className="posts">
       { postsLoader ? posts.map((post) =>{
         return (
-          <div className='post' key={post.id}>
-            <img src={post.photo_post_url}/>
-            <div className='post-content'>
-              <div>
-                <h2>{post.title}</h2>
-                <span>{props.formatDate(post.created_at)}</span>
+          <Link key={post.id} to={`/read/${post.id}`}>
+            <div className='post' key={post.id}>
+              <img src={post.photo_post_url}/>
+              <div className='post-content'>
+                <div>
+                  <h2>{post.title}</h2>
+                  <span>{props.formatDate(post.created_at)}</span>
+                </div>
+                <p>{props.formatDescription(post.description)}</p>
               </div>
-              <p>{props.formatDescription(post.description)}</p>
             </div>
-          </div>
+          </Link>
         )
       }) : ''}
     </div>
