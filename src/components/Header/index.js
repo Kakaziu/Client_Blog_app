@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
+import PropTypes from 'prop-types'
 import './style.css'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { logout } from '../../store/modules/user/userAction'
 
-const Header = () =>{
+const Header = (props) =>{
   const [showLinks, setShowLinks] = useState(false)
   const { user } = useSelector(state => state.UserReducer)
   const dispatch = useDispatch()
@@ -13,6 +14,18 @@ const Header = () =>{
     dispatch(logout)
     localStorage.removeItem('token')
     window.location.href = '/'
+  }
+
+  if(props.isReader){
+    return (
+      <header className='header' style={{ boxShadow: '2px 2px 5px rgba(0,0,0,0.4)'}}>
+        <div className='container'>
+          <h2>MyBlog</h2>
+
+          <Link to='/' style={{ fontWeight: 'bold' }}>Voltar para a Home</Link>
+        </div>
+      </header>
+    )
   }
 
   return(
@@ -35,6 +48,10 @@ const Header = () =>{
       </div>
     </header>
   )
+}
+
+Header.propTypes = {
+  isReader: PropTypes.bool
 }
 
 export default Header

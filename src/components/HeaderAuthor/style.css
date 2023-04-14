@@ -1,3 +1,7 @@
+.header-author{
+  padding: 20px;
+}
+
 .panel-nav{
   display: flex;
   align-items: center;
@@ -13,6 +17,8 @@
   color: black;
   padding: 0;
   margin-left: 15px;
+  border: none;
+  cursor: pointer;
 }
 
 .panel-nav button:hover{
@@ -48,6 +54,13 @@
   text-decoration: none;
   color: #adadad;
   transition: 0.3s;
+  font-size: 18px;
+  cursor: pointer;
+}
+
+.actions button{
+  border: none;
+
 }
 
 .actions button:hover{

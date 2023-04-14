@@ -32,7 +32,7 @@ const HeaderAuthor = () =>{
 
 
   return(
-    <header className="header">
+    <header className="header-author">
       <div className="container">
         <h2>MyBlogPanel</h2>
 

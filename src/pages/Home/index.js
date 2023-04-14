@@ -49,7 +49,7 @@ const Home = () =>{
 
   return(
     <section id="home">
-      <Header/>
+      <Header isReader={false}/>
       <FeaturedPost formatDate={formatDate} formatDescription={formatDescription} posts={posts}/>
       <Posts formatDate={formatDate} formatDescription={formatDescription} posts={posts}/>
     </section>
