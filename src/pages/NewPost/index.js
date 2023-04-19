@@ -16,20 +16,18 @@ const NewPost = (props) =>{
   const [paragraphs, setParagraphs] = useState([])
   const [title, setTitle] = useState('')
   const [description, setDescription] = useState('')
-  const [photoFile, setPhotoFile] = useState('')
+  const [photoInfo, setPhotoInfo] = useState({ photo_url: '', photo_file: '' })
   const [isFinish, setIsFinish] = useState(false)
   const [caughtPost, setCaughtPost] = useState(null)
-  const [loading, setLoading] = useState(true)  // eslint-disable-line
 
   useEffect(() =>{
-    getPost()
-    setLoading(false)
+    if(id) getPost()
   }, [])
 
   useEffect(() =>{
     if(caughtPost){
       setTitle(caughtPost.title)
-      setPhotoFile(caughtPost.photo_post_url)
+      setPhotoInfo({ photo_url: caughtPost.photo_post_url, photo_file: caughtPost.photo_post_url })
 
       const caughtParagraphs = caughtPost.description.split('///')
       let setCaughtParagraphs = []
@@ -43,7 +41,6 @@ const NewPost = (props) =>{
   }, [caughtPost])
 
   function handleChange(e){
-    const pictureImg = document.querySelector('.picture_image')
     const inputTarget = e.target
     const file = inputTarget.files[0]
 
@@ -53,18 +50,12 @@ const NewPost = (props) =>{
       reader.addEventListener('load', (e) =>{
         const readerTarget = e.target
 
-        const img = document.createElement('img')
-        img.src = readerTarget.result
-        img.classList.add('picture_img')
-        pictureImg.innerHTML = ''
-        pictureImg.appendChild(img)
-        setPhotoFile(file)
+        setPhotoInfo({ photo_url: readerTarget.result, photo_file: file})
       })
 
       reader.readAsDataURL(file)
     }else{
-      pictureImg.innerHTML = 'Escolha a imagem do post'
-      setPhotoFile(false)
+      setPhotoInfo({ photo_url: '', photo_file: '' })
     }
   }
 
@@ -160,7 +151,7 @@ const NewPost = (props) =>{
   function handleSubmit(e){
     e.preventDefault()
 
-    if(!photoFile){
+    if(!photoInfo.photo_file){
       toast.warn('O seu post não possui imagem')
     }
 
@@ -177,9 +168,9 @@ const NewPost = (props) =>{
 
     formData.append('title', title)
     formData.append('description', description)
-    formData.append('photo_post_url', photoFile)
+    formData.append('photo_post_url', photoInfo.photo_file)
 
-    if(photoFile && title && description){
+    if(photoInfo.photo_file && title && description){
       props.isEdit ? dispatch(editPostRequest(formData, id)) : dispatch(addPostRequest(formData))
       navigate('/panel')
     }
@@ -205,7 +196,7 @@ const NewPost = (props) =>{
 
         <label className='picture' htmlFor='picture_input'>
           <span className='picture_image'>
-            { !loading ? <img src={photoFile} className='picture_img'/> : 'Escolha uma imagem para o post'}
+            { photoInfo.photo_file ? <img src={photoInfo.photo_url} className='picture_img'/> : 'Escolha uma imagem para o post'}
           </span>
         </label>
         <input

@@ -24,6 +24,9 @@ const PostsAuthor = () =>{
 
       const filteredPosts = posts.filter(post => post.create_by === user.id)
       setPostsUser(filteredPosts)
+    }else{
+      setPostsUser([])
+      setPostsLoader(false)
     }
   }, [posts])
 
@@ -38,6 +41,11 @@ const PostsAuthor = () =>{
     return title
   }
 
+  function deletePost(id){
+    dispatch(deletePostRequest(id))
+    dispatch(getPostsRequest)
+  }
+
   return(
     <>
       <h1 className='title-author'>Seus posts</h1>
@@ -49,7 +57,7 @@ const PostsAuthor = () =>{
               <h3>{formatTitle(post.title)}</h3>
               <div className='icon-actions'>
                 <AiFillEdit size='22' className='icon-post icon-edit' onClick={() => navigate(`/post/${post.id}`)}/>
-                <AiFillDelete size='22' className='icon-post icon-delete' cursor='pointer' onClick={() => dispatch(deletePostRequest(post.id))}/>
+                <AiFillDelete size='22' className='icon-post icon-delete' cursor='pointer' onClick={() => deletePost(post.id)}/>
               </div>
             </div>
           )
