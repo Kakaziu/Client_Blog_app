@@ -44,6 +44,8 @@ const Header = (props) =>{
           <Link to='/register/reader'>Cadastre-se como leitor</Link>
           <hr></hr>
           <Link to='/register/author'>Cadastre-se como autor</Link>
+          <hr></hr>
+          <Link to='/login'>Login</Link>
         </div> : <></>}
       </div>
     </header>
