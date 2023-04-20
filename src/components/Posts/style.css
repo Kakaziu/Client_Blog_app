@@ -36,3 +36,56 @@
   color: #adadad;
 }
 
+@media (max-width: 800px){
+  .posts{
+    margin-top: 0px;
+
+  }
+
+  .post-content h2{
+    font-size: 20px;
+  }
+
+  .post-content p{
+    font-size: 15px;
+    margin-top: 10px;
+  }
+
+  .post img{
+    width: 90%;
+  }
+
+  .post span{
+    margin: 10px 0px;
+    display: block;
+  }
+
+  .post{
+    flex-direction: column-reverse;
+  }
+
+  .post-content{
+    margin-left: 0;
+    margin-bottom: 20px;
+    width: 90%;
+  }
+}
+
+@media (max-width: 500px){
+  .posts{
+    width: 80%;
+  }
+
+  .post img{
+    width: 100%;
+  }
+
+  .post{
+    margin-top: 40px;
+  }
+
+  .post-content{
+    width: 100%;
+  }
+}
+
