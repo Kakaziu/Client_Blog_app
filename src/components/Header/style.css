@@ -79,10 +79,6 @@
   display: none;
 }
 
-.menu hr{
-  display: none;
-}
-
 @keyframes showLinks{
   from{
     top: 5%;
