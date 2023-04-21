@@ -35,7 +35,11 @@ const PostsAuthor = () =>{
     if(title.length > 15){
       let arrayTitle = title.split(' ')
 
-      return arrayTitle[0] + ' ' + arrayTitle[1] + '...'
+      if(arrayTitle.length > 1){
+        return arrayTitle[0] + ' ' + arrayTitle[1] + '...'
+      }
+
+      return arrayTitle[0].slice(-15) + '...'
     }
 
     return title
