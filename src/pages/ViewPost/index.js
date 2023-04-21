@@ -1,7 +1,7 @@
 import React from 'react'
 import './style.css'
 import Header from '../../components/Header'
-import ContentRead from '../../components/contentRead'
+import ContentRead from '../../components/ContentRead'
 
 function ViewPost(){
   return(

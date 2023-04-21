@@ -24,7 +24,7 @@ const Header = (props) =>{
         <div className='container'>
           <h2>MyBlog</h2>
 
-          <Link to='/' style={{ fontWeight: 'bold' }}>Voltar para a Home</Link>
+          <Link to='/' style={{ fontWeight: 'bold' }}>Home</Link>
         </div>
       </header>
     )
