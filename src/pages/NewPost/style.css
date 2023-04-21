@@ -176,3 +176,28 @@
     color: #a8a8a8;
   }
 }
+
+
+@media (max-width: 770px){
+  .picture{
+    width: 100%;
+  }
+
+  .field{
+    width: 100%;
+  }
+
+  .btn-para, .btn-para-finish{
+    width: 50%;
+  }
+
+  .submit-btn{
+    width: 100%;
+  }
+}
+
+@media (max-width: 540px){
+  #newPost{
+    width: 90%;
+  }
+}

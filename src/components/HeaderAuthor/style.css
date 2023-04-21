@@ -92,5 +92,11 @@
   }
 }
 
+@media (max-width: 540px){
+  .panel-nav span{
+    display: none;
+  }
+}
+
 
 
