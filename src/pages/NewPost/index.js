@@ -65,6 +65,15 @@ const NewPost = (props) =>{
     setParagraphs([...paragraphs, { content: '', saved: false }])
   }
 
+  function onChangeTextarea(index, e){
+
+    const paragraphsRef = [...paragraphs]
+
+    paragraphsRef.splice(index, 1, { content: e.target.value, saved: false})
+
+    setParagraphs(paragraphsRef)
+  }
+
   function saveParagraph(e, index){
 
     if(isFinish){
@@ -113,11 +122,13 @@ const NewPost = (props) =>{
       return
     }
 
+    console.log(index)
+
     e.preventDefault()
 
     const paragraphRef = [...paragraphs]
 
-    paragraphRef.splice(index, 1)
+    console.log(paragraphRef.splice(index, 1))
 
     setParagraphs(paragraphRef)
   }
@@ -215,7 +226,6 @@ const NewPost = (props) =>{
             onChange={(e) => setTitle(e.target.value)}
           />
         </label>
-
         <div className='paragraphs-area'>
           { paragraphs.map((paragraph, index) =>{
             return (
@@ -224,7 +234,8 @@ const NewPost = (props) =>{
                   placeholder={`Parágrafo ${index + 1}`}
                   disabled={ paragraph.saved ? true : false}
                   className={ paragraph.saved ? 'textarea textarea-saved' : 'textarea'}
-                  defaultValue={paragraph.content}
+                  onChange={(e) => onChangeTextarea(index, e)}
+                  value={paragraph.content}
                 ></textarea>
                 <button
                   className={ paragraph.saved ? 'btn-action btn-saved' : 'btn-action btn-not-saved'}
@@ -247,7 +258,6 @@ const NewPost = (props) =>{
             name='description'
           />
         </div>
-
         <button className='submit-btn'>Postar</button>
       </form>
     </section>

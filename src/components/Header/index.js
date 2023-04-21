@@ -40,8 +40,6 @@ const Header = (props) =>{
               <button onClick={() => setShowLinks(!showLinks)}>Cadastre-se</button>
             </div> :
             <div className='menu'>
-              <span>Olá, {user.name}</span>
-              <hr></hr>
               { user.is_admin ? <Link to='/panel'>Ir para o painel</Link> : ''}
               <button onClick={handleLogout}>Logout</button>
             </div>
