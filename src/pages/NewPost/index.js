@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import ReactLoading from 'react-loading'
+import { useDispatch, useSelector } from 'react-redux'
 import PropTypes from 'prop-types'
 import { useNavigate, useParams } from 'react-router-dom'
 import { toast } from 'react-toastify'
@@ -12,6 +13,7 @@ const NewPost = (props) =>{
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const { id } = useParams()
+  const posts = useSelector(state => state.PostReducer)
 
   const [paragraphs, setParagraphs] = useState([])
   const [title, setTitle] = useState('')
@@ -258,7 +260,7 @@ const NewPost = (props) =>{
             name='description'
           />
         </div>
-        <button className='submit-btn'>Postar</button>
+        <button className='submit-btn'>Postar { posts.loading ? <span><ReactLoading type='spin' width='20px' height='20px'/></span> : <></>}</button>
       </form>
     </section>
   )

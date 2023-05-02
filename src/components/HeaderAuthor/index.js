@@ -21,6 +21,8 @@ const HeaderAuthor = () =>{
 
       const filteredPosts = posts.filter(post => post.create_by === user.id)
       setPostsUser(filteredPosts)
+    }else{
+      setPostsUser([])
     }
   }, [posts])
 
@@ -29,7 +31,6 @@ const HeaderAuthor = () =>{
     localStorage.removeItem('token')
     window.location.href = '/'
   }
-
 
   return(
     <header className="header-author">

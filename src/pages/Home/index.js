@@ -17,7 +17,7 @@ const Home = () =>{
   }, [])
 
   function formatDate(date){
-    const data = new Date() //eslint-disable-line
+    const data = new Date()
     const actualYear = data.getFullYear()
     const actualMonth = data.getMonth() + 1
     const actualDay = data.getDate()
@@ -34,7 +34,11 @@ const Home = () =>{
       return `a ${actualMonth - creationMonth} meses atrás`
     }
 
-    return `Postado a ${actualDay - creationDay} dias atrás`
+    if(actualDay !== creationDay){
+      `Postado a ${actualDay - creationDay} dias atrás`
+    }
+
+    return 'Post criado hoje.'
   }
 
   function formatDescription(description){

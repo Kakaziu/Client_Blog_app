@@ -10,7 +10,7 @@ import api from '../../services/api'
 
 const Register = (props) =>{
 
-  const navigate = useNavigate()
+  const navigate = useNavigate() //eslint-disable-line
 
   const [inputName, setInputName] = useState({ value: '', error: ''})
   const [inputEmail, setInputEmail] = useState({ value: '', error: ''})
@@ -39,7 +39,7 @@ const Register = (props) =>{
 
         if(response.status === 200){
           setLoading(false)
-          navigate('/')
+          navigate('/login')
         }
       }catch(e){
         setLoading(false)
@@ -88,7 +88,7 @@ const Register = (props) =>{
             value={inputPassword.value}></input>
         </div>
         { inputPassword.error ? <span className='error-message'>{inputPassword.error}</span> : <></> }
-        <button>Cadastrar { loading ? <span><ReactLoading type='spin' width='15px' height='15px'/></span> : <></>}</button>
+        <button>Cadastrar { loading ? <span><ReactLoading type='spin' width='20px' height='20px'/></span> : <></>}</button>
         <span className='message-login'>Já tem uma conta? Faça <Link to='/login'>Login</Link></span>
       </form>
     </section>

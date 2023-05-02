@@ -74,7 +74,7 @@ const Login = () =>{
             value={inputPassword.value}></input>
         </div>
         { inputPassword.error ? <span className='error-message'>{inputPassword.error}</span> : <></> }
-        <button>Login { user.loading ? <span><ReactLoading type='spin' width='15px' height='15px'/></span> : <></>}</button>
+        <button>Login { user.loading ? <span><ReactLoading type='spin' width='20px' height='20px'/></span> : <></>}</button>
       </form>
     </section>
   )

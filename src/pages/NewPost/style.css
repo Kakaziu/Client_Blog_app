@@ -157,6 +157,14 @@
   border: none;
   transition: 0.3s ease-in-out;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.submit-btn span{
+  margin-left: 10px;
+  margin-top: 2px;
 }
 
 .submit-btn:hover{

@@ -9,6 +9,8 @@ const FeaturedPost = (props) =>{
   const [postsLoader, setPostsLoader] = useState(false)
   const { posts } = props
 
+  console.log(posts)
+
   useEffect(() =>{
     if(posts.length > 0){
       setPostsLoader(true)
