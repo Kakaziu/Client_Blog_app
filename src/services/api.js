@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-  baseURL: 'http://54.207.30.74:3333/'
+  baseURL: 'https://server-blog-app-oizk-2ho1c32nz-kakaziu.vercel.app/'
 })
 
 export default api
