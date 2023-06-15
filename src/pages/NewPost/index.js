@@ -11,7 +11,7 @@ import api from '../../services/api'
 const NewPost = (props) =>{
 
   const dispatch = useDispatch()
-  const navigate = useNavigate()
+  const navigate = useNavigate() // eslint-disable-line
   const { id } = useParams()
   const posts = useSelector(state => state.PostReducer)
 
@@ -185,7 +185,7 @@ const NewPost = (props) =>{
 
     if(photoInfo.photo_file && title && description){
       props.isEdit ? dispatch(editPostRequest(formData, id)) : dispatch(addPostRequest(formData))
-      navigate('/panel')
+      // navigate('/panel')
     }
   }
 
