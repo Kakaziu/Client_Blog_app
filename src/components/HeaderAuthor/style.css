@@ -1,18 +1,18 @@
-.header-author{
+.header-author {
   padding: 20px;
 }
 
-.panel-nav{
+.panel-nav {
   display: flex;
   align-items: center;
   padding: 10px;
 }
 
-.panel-nav span{
+.panel-nav span {
   font-size: 20px;
 }
 
-.panel-nav button{
+.panel-nav button {
   background-color: transparent;
   color: black;
   padding: 0;
@@ -21,11 +21,11 @@
   cursor: pointer;
 }
 
-.panel-nav button:hover{
+.panel-nav button:hover {
   background-color: transparent;
 }
 
-.actions{
+.actions {
   padding: 15px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.466);
   position: absolute;
@@ -42,13 +42,14 @@
   font-size: 20px;
 }
 
-.actions-show{
+.actions-show {
   animation-name: actionsLinks;
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
 
-.actions button, a{
+.actions button,
+a {
   background-color: transparent;
   padding: 15px;
   text-decoration: none;
@@ -58,45 +59,41 @@
   cursor: pointer;
 }
 
-.actions button{
+.actions button {
   border: none;
-
 }
 
-.actions button:hover{
+.actions button:hover {
   background-color: transparent;
   color: red;
 }
 
-.actions a:hover{
+.actions a:hover {
   color: blue;
 }
 
-.actions hr{
+.actions hr {
   width: 100%;
 }
 
-.actions span{
+.actions span {
   padding: 15px;
 }
 
-@keyframes actionsLinks{
-  from{
+@keyframes actionsLinks {
+  from {
     top: 4%;
     opacity: 0;
   }
 
-  to{
+  to {
     top: 13%;
     opacity: 1;
   }
 }
 
-@media (max-width: 540px){
-  .panel-nav span{
+@media (max-width: 540px) {
+  .panel-nav span {
     display: none;
   }
 }
-
-
-

@@ -1,33 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import PropTypes from 'prop-types'
-import './style.css'
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
+import "./style.css";
 
-const FeaturedPost = (props) =>{
+const FeaturedPost = (props) => {
+  const [randomPost, setRandomPost] = useState({});
+  const [postsLoader, setPostsLoader] = useState(false);
+  const { posts } = props;
 
-  const [randomPost, setRandomPost] = useState({})
-  const [postsLoader, setPostsLoader] = useState(false)
-  const { posts } = props
+  console.log(posts);
 
-  console.log(posts)
-
-  useEffect(() =>{
-    if(posts.length > 0){
-      setPostsLoader(true)
-      setRandomPost(getRandomPost(posts))
+  useEffect(() => {
+    if (posts.length > 0) {
+      setPostsLoader(true);
+      setRandomPost(getRandomPost(posts));
     }
-  }, [posts])
+  }, [posts]);
 
-  function getRandomPost(posts){
-    const random = Math.floor(Math.random() * posts.length)
+  function getRandomPost(posts) {
+    const random = Math.floor(Math.random() * posts.length);
 
-    return posts[random]
+    return posts[random];
   }
 
-  return(
+  return (
     <>
       {postsLoader && (
-        <Link to={`/read/${randomPost.id}`} className='link-featured-post'>
+        <Link to={`/read/${randomPost.id}`} className="link-featured-post">
           <div className="featured-post">
             <img src={randomPost.photo_post_url} />
             <div className="content-featured-post">
@@ -43,14 +42,13 @@ const FeaturedPost = (props) =>{
       )}
       <hr className="line-post" />
     </>
-  )
-}
-
+  );
+};
 
 FeaturedPost.propTypes = {
   formatDate: PropTypes.func,
   formatDescription: PropTypes.func,
-  posts: PropTypes.array
-}
+  posts: PropTypes.array,
+};
 
-export default FeaturedPost
+export default FeaturedPost;

@@ -1,273 +1,312 @@
-import React, { useEffect, useState } from 'react'
-import ReactLoading from 'react-loading'
-import { useDispatch, useSelector } from 'react-redux'
-import PropTypes from 'prop-types'
-import { useNavigate, useParams } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import './style.css'
-import { addPostRequest, editPostRequest } from '../../store/modules/post/postActions'
-import api from '../../services/api'
+import React, { useEffect, useState } from "react";
+import ReactLoading from "react-loading";
+import { useDispatch, useSelector } from "react-redux";
+import PropTypes from "prop-types";
+import { useNavigate, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
+import "./style.css";
+import {
+  addPostRequest,
+  editPostRequest,
+} from "../../store/modules/post/postActions";
+import api from "../../services/api";
 
-const NewPost = (props) =>{
+const NewPost = (props) => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate(); // eslint-disable-line
+  const { id } = useParams();
+  const posts = useSelector((state) => state.PostReducer);
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate() // eslint-disable-line
-  const { id } = useParams()
-  const posts = useSelector(state => state.PostReducer)
+  const [paragraphs, setParagraphs] = useState([]);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [photoInfo, setPhotoInfo] = useState({ photo_url: "", photo_file: "" });
+  const [isFinish, setIsFinish] = useState(false);
+  const [caughtPost, setCaughtPost] = useState(null);
 
-  const [paragraphs, setParagraphs] = useState([])
-  const [title, setTitle] = useState('')
-  const [description, setDescription] = useState('')
-  const [photoInfo, setPhotoInfo] = useState({ photo_url: '', photo_file: '' })
-  const [isFinish, setIsFinish] = useState(false)
-  const [caughtPost, setCaughtPost] = useState(null)
+  useEffect(() => {
+    if (id) getPost();
+  }, []);
 
-  useEffect(() =>{
-    if(id) getPost()
-  }, [])
+  useEffect(() => {
+    if (caughtPost) {
+      setTitle(caughtPost.title);
+      setPhotoInfo({
+        photo_url: caughtPost.photo_post_url,
+        photo_file: caughtPost.photo_post_url,
+      });
 
-  useEffect(() =>{
-    if(caughtPost){
-      setTitle(caughtPost.title)
-      setPhotoInfo({ photo_url: caughtPost.photo_post_url, photo_file: caughtPost.photo_post_url })
+      const caughtParagraphs = caughtPost.description.split("///");
+      let setCaughtParagraphs = [];
 
-      const caughtParagraphs = caughtPost.description.split('///')
-      let setCaughtParagraphs = []
+      caughtParagraphs.forEach((paragraph) => {
+        setCaughtParagraphs.push({ content: paragraph, saved: false });
+      });
 
-      caughtParagraphs.forEach((paragraph) =>{
-        setCaughtParagraphs.push({ content: paragraph, saved: false })
-      })
-
-      setParagraphs(setCaughtParagraphs)
+      setParagraphs(setCaughtParagraphs);
     }
-  }, [caughtPost])
+  }, [caughtPost]);
 
-  function handleChange(e){
-    const inputTarget = e.target
-    const file = inputTarget.files[0]
+  function handleChange(e) {
+    const inputTarget = e.target;
+    const file = inputTarget.files[0];
 
-    if(file){
-      const reader = new FileReader()
+    if (file) {
+      const reader = new FileReader();
 
-      reader.addEventListener('load', (e) =>{
-        const readerTarget = e.target
+      reader.addEventListener("load", (e) => {
+        const readerTarget = e.target;
 
-        setPhotoInfo({ photo_url: readerTarget.result, photo_file: file})
-      })
+        setPhotoInfo({ photo_url: readerTarget.result, photo_file: file });
+      });
 
-      reader.readAsDataURL(file)
-    }else{
-      setPhotoInfo({ photo_url: '', photo_file: '' })
+      reader.readAsDataURL(file);
+    } else {
+      setPhotoInfo({ photo_url: "", photo_file: "" });
     }
   }
 
-  function addParagraph(e){
-    e.preventDefault()
+  function addParagraph(e) {
+    e.preventDefault();
 
-    setParagraphs([...paragraphs, { content: '', saved: false }])
+    setParagraphs([...paragraphs, { content: "", saved: false }]);
   }
 
-  function onChangeTextarea(index, e){
+  function onChangeTextarea(index, e) {
+    const paragraphsRef = [...paragraphs];
 
-    const paragraphsRef = [...paragraphs]
+    paragraphsRef.splice(index, 1, { content: e.target.value, saved: false });
 
-    paragraphsRef.splice(index, 1, { content: e.target.value, saved: false})
-
-    setParagraphs(paragraphsRef)
+    setParagraphs(paragraphsRef);
   }
 
-  function saveParagraph(e, index){
-
-    if(isFinish){
-      toast.warn('Os parágrafos foram finalizados.')
-      return
+  function saveParagraph(e, index) {
+    if (isFinish) {
+      toast.warn("Os parágrafos foram finalizados.");
+      return;
     }
 
-    e.preventDefault()
-    const btn = e.target
-    const textarea = btn.previousSibling
+    e.preventDefault();
+    const btn = e.target;
+    const textarea = btn.previousSibling;
 
-    const paragraphRef = [...paragraphs]
+    const paragraphRef = [...paragraphs];
 
-    if(!textarea.value){
-      toast.error('Não pode salvar parágrafos vazios.')
-      return
+    if (!textarea.value) {
+      toast.error("Não pode salvar parágrafos vazios.");
+      return;
     }
 
-    paragraphRef.splice(index, 1, { content: textarea.value.trim(), saved: true })
+    paragraphRef.splice(index, 1, {
+      content: textarea.value.trim(),
+      saved: true,
+    });
 
-    setParagraphs(paragraphRef)
+    setParagraphs(paragraphRef);
   }
 
-  function editParagraph(e, index){
-
-    if(isFinish){
-      toast.warn('Os parágrafos foram finalizados.')
-      return
+  function editParagraph(e, index) {
+    if (isFinish) {
+      toast.warn("Os parágrafos foram finalizados.");
+      return;
     }
 
-    e.preventDefault()
+    e.preventDefault();
 
-    const paragraphRef = [...paragraphs]
+    const paragraphRef = [...paragraphs];
 
-    const paragraph = paragraphRef.filter((paragraph, id) => id === index)
-    const content = paragraph.content
+    const paragraph = paragraphRef.filter((paragraph, id) => id === index);
+    const content = paragraph.content;
 
-    paragraphRef.splice(index, 1, { content: content, saved: false })
+    paragraphRef.splice(index, 1, { content: content, saved: false });
 
-    setParagraphs(paragraphRef)
+    setParagraphs(paragraphRef);
   }
 
-  function deleteParagraph(e, index){
-    if(isFinish){
-      toast.warn('Os parágrafos foram finalizados.')
-      return
+  function deleteParagraph(e, index) {
+    if (isFinish) {
+      toast.warn("Os parágrafos foram finalizados.");
+      return;
     }
 
-    console.log(index)
+    console.log(index);
 
-    e.preventDefault()
+    e.preventDefault();
 
-    const paragraphRef = [...paragraphs]
+    const paragraphRef = [...paragraphs];
 
-    console.log(paragraphRef.splice(index, 1))
+    console.log(paragraphRef.splice(index, 1));
 
-    setParagraphs(paragraphRef)
+    setParagraphs(paragraphRef);
   }
 
-  function endPara(e){
-    e.preventDefault()
+  function endPara(e) {
+    e.preventDefault();
 
-    if(paragraphs.length === 0){
-      toast.warn('Sua postagem não tem parágrafos.')
-      return
+    if (paragraphs.length === 0) {
+      toast.warn("Sua postagem não tem parágrafos.");
+      return;
     }
 
     const hasNotSavedParagraph = paragraphs.find((paragraph) => {
-      return !paragraph.saved
-    })
+      return !paragraph.saved;
+    });
 
-    if(hasNotSavedParagraph){
-      toast.warn('há parágrafos não salvos')
-      return
+    if (hasNotSavedParagraph) {
+      toast.warn("há parágrafos não salvos");
+      return;
     }
 
-    let paragraphsContent = paragraphs.map(paragraph =>{
-      return paragraph.content
-    })
-    const joinedParagraphs = paragraphsContent.join('///')
+    let paragraphsContent = paragraphs.map((paragraph) => {
+      return paragraph.content;
+    });
+    const joinedParagraphs = paragraphsContent.join("///");
 
-    setDescription(joinedParagraphs)
-    setIsFinish(!isFinish)
+    setDescription(joinedParagraphs);
+    setIsFinish(!isFinish);
   }
 
-  function handleSubmit(e){
-    e.preventDefault()
+  function handleSubmit(e) {
+    e.preventDefault();
 
-    if(!photoInfo.photo_file){
-      toast.warn('O seu post não possui imagem')
+    if (!photoInfo.photo_file) {
+      toast.warn("O seu post não possui imagem");
     }
 
-    if(!title){
-      toast.warn('O campo "Título" está vazio.')
+    if (!title) {
+      toast.warn('O campo "Título" está vazio.');
     }
 
-    if(!description){
-      toast.warn('Seu post não tem parágrafos.')
+    if (!description) {
+      toast.warn("Seu post não tem parágrafos.");
     }
 
+    const formData = new FormData();
 
-    const formData = new FormData()
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("photo_post_url", photoInfo.photo_file);
 
-    formData.append('title', title)
-    formData.append('description', description)
-    formData.append('photo_post_url', photoInfo.photo_file)
-
-    if(photoInfo.photo_file && title && description){
-      props.isEdit ? dispatch(editPostRequest(formData, id)) : dispatch(addPostRequest(formData))
+    if (photoInfo.photo_file && title && description) {
+      props.isEdit
+        ? dispatch(editPostRequest(formData, id))
+        : dispatch(addPostRequest(formData));
       // navigate('/panel')
     }
   }
 
-  async function getPost(){
-    try{
-      const response = await api.get(`/posts/${id}`)
+  async function getPost() {
+    try {
+      const response = await api.get(`/posts/${id}`);
 
-      setCaughtPost(response.data)
-    }catch(e){
-      return null
+      setCaughtPost(response.data);
+    } catch (e) {
+      return null;
     }
   }
 
-  return(
-    <section id='new-post'>
+  return (
+    <section id="new-post">
       <h1>Novo post</h1>
       <form
-        encType='multipart/form-data'
-        className='form-post'
-        onSubmit={handleSubmit}>
-
-        <label className='picture' htmlFor='picture_input'>
-          <span className='picture_image'>
-            { photoInfo.photo_file ? <img src={photoInfo.photo_url} className='picture_img'/> : 'Escolha uma imagem para o post'}
+        encType="multipart/form-data"
+        className="form-post"
+        onSubmit={handleSubmit}
+      >
+        <label className="picture" htmlFor="picture_input">
+          <span className="picture_image">
+            {photoInfo.photo_file ? (
+              <img src={photoInfo.photo_url} className="picture_img" />
+            ) : (
+              "Escolha uma imagem para o post"
+            )}
           </span>
         </label>
         <input
-          type='file'
-          accept='image/*'
-          id='picture_input'
+          type="file"
+          accept="image/*"
+          id="picture_input"
           onChange={handleChange}
-          name='photo_post_url'/>
+          name="photo_post_url"
+        />
 
-        <label className='field'>
+        <label className="field">
           <input
-            type='text'
-            placeholder='Título'
-            name='title'
+            type="text"
+            placeholder="Título"
+            name="title"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
         </label>
-        <div className='paragraphs-area'>
-          { paragraphs.map((paragraph, index) =>{
+        <div className="paragraphs-area">
+          {paragraphs.map((paragraph, index) => {
             return (
-              <label className='field textarea-field' key={index}>
+              <label className="field textarea-field" key={index}>
                 <textarea
                   placeholder={`Parágrafo ${index + 1}`}
-                  disabled={ paragraph.saved ? true : false}
-                  className={ paragraph.saved ? 'textarea textarea-saved' : 'textarea'}
+                  disabled={paragraph.saved ? true : false}
+                  className={
+                    paragraph.saved ? "textarea textarea-saved" : "textarea"
+                  }
                   onChange={(e) => onChangeTextarea(index, e)}
                   value={paragraph.content}
                 ></textarea>
                 <button
-                  className={ paragraph.saved ? 'btn-action btn-saved' : 'btn-action btn-not-saved'}
-                  onClick={!paragraph.saved ? (e) => saveParagraph(e, index) : (e) => editParagraph(e, index)}>{ paragraph.saved ? 'Salvo' : 'Salvar'}
+                  className={
+                    paragraph.saved
+                      ? "btn-action btn-saved"
+                      : "btn-action btn-not-saved"
+                  }
+                  onClick={
+                    !paragraph.saved
+                      ? (e) => saveParagraph(e, index)
+                      : (e) => editParagraph(e, index)
+                  }
+                >
+                  {paragraph.saved ? "Salvo" : "Salvar"}
                 </button>
                 <button
-                  className={ paragraph.saved ? 'btn-action btn-remove-para' : 'none'}
+                  className={
+                    paragraph.saved ? "btn-action btn-remove-para" : "none"
+                  }
                   onClick={(e) => deleteParagraph(e, index)}
-                >Apagar</button>
+                >
+                  Apagar
+                </button>
               </label>
-            )
+            );
           })}
           <div>
-            <button className={isFinish ? 'btn-para-finish' : 'btn-para'} onClick={addParagraph}>Adicionar parágrafo</button>
-            <button className='btn-para' onClick={endPara}>{ isFinish ? 'Voltar' : 'Finalizar'}</button>
+            <button
+              className={isFinish ? "btn-para-finish" : "btn-para"}
+              onClick={addParagraph}
+            >
+              Adicionar parágrafo
+            </button>
+            <button className="btn-para" onClick={endPara}>
+              {isFinish ? "Voltar" : "Finalizar"}
+            </button>
           </div>
-          <input
-            type='hidden'
-            value={description}
-            name='description'
-          />
+          <input type="hidden" value={description} name="description" />
         </div>
-        <button className='submit-btn'>Postar { posts.loading ? <span><ReactLoading type='spin' width='20px' height='20px'/></span> : <></>}</button>
+        <button className="submit-btn">
+          Postar{" "}
+          {posts.loading ? (
+            <span>
+              <ReactLoading type="spin" width="20px" height="20px" />
+            </span>
+          ) : (
+            <></>
+          )}
+        </button>
       </form>
     </section>
-  )
-}
+  );
+};
 
 NewPost.propTypes = {
-  isEdit: PropTypes.bool
-}
+  isEdit: PropTypes.bool,
+};
 
-export default NewPost
+export default NewPost;

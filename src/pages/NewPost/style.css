@@ -1,19 +1,19 @@
-#new-post{
+#new-post {
   margin: auto;
   margin-top: 40px;
   width: 80%;
 }
 
-#new-post h1{
+#new-post h1 {
   margin: auto;
 }
 
-.form-post{
+.form-post {
   width: 100%;
   margin-top: 30px;
 }
 
-.picture{
+.picture {
   width: 60%;
   aspect-ratio: 16/9;
   border: 2px dashed currentColor;
@@ -27,25 +27,25 @@
   margin-bottom: 40px;
 }
 
-.picture:hover{
+.picture:hover {
   color: #999;
 }
 
-#picture_input{
+#picture_input {
   display: none;
 }
 
-.picture_img{
+.picture_img {
   width: 100%;
 }
 
-.field{
+.field {
   display: block;
   margin-bottom: 40px;
   width: 70%;
 }
 
-.field input{
+.field input {
   border: none;
   color: black;
   border-bottom: 1px solid #a8a8a8;
@@ -56,11 +56,11 @@
   font-size: 18px;
 }
 
-.field input:focus{
+.field input:focus {
   border-bottom: 1px solid black;
 }
 
-.textarea{
+.textarea {
   height: 200px;
   border: none;
   color: black;
@@ -72,17 +72,17 @@
   font-size: 18px;
 }
 
-.textarea-saved{
+.textarea-saved {
   animation-name: offFocusInput;
   animation-duration: 0.3s;
   animation-fill-mode: forwards;
 }
 
-.paragraphs-area div{
+.paragraphs-area div {
   display: flex;
 }
 
-.btn-para{
+.btn-para {
   width: 30%;
   padding: 10px 30px;
   font-size: 16px;
@@ -96,7 +96,7 @@
   cursor: pointer;
 }
 
-.btn-para-finish{
+.btn-para-finish {
   width: 30%;
   padding: 10px 30px;
   font-size: 16px;
@@ -109,12 +109,11 @@
   cursor: not-allowed;
 }
 
-
-.btn-para:hover{
+.btn-para:hover {
   transform: scale(1.1);
 }
 
-.btn-action{
+.btn-action {
   padding: 8px 15px;
   margin: auto;
   margin-top: 10px;
@@ -126,26 +125,26 @@
   transition: 0.3s;
 }
 
-.btn-not-saved{
+.btn-not-saved {
   background-color: black;
 }
 
-.btn-saved{
+.btn-saved {
   background-color: rgb(93, 252, 93);
 }
 
-.btn-remove-para{
+.btn-remove-para {
   background-color: red;
   margin-left: 10px;
 }
 
-.saved-paragraph{
+.saved-paragraph {
   border-radius: 4px;
   border: 1px solid #696969;
   background-color: #ccc;
 }
 
-.submit-btn{
+.submit-btn {
   margin-top: 50px;
   padding: 10px 0px;
   font-size: 20px;
@@ -162,16 +161,16 @@
   justify-content: center;
 }
 
-.submit-btn span{
+.submit-btn span {
   margin-left: 10px;
   margin-top: 2px;
 }
 
-.submit-btn:hover{
+.submit-btn:hover {
   background-color: rgb(77, 209, 77);
 }
 
-.none{
+.none {
   display: none;
 }
 
@@ -185,27 +184,27 @@
   }
 }
 
-
-@media (max-width: 770px){
-  .picture{
+@media (max-width: 770px) {
+  .picture {
     width: 100%;
   }
 
-  .field{
+  .field {
     width: 100%;
   }
 
-  .btn-para, .btn-para-finish{
+  .btn-para,
+  .btn-para-finish {
     width: 50%;
   }
 
-  .submit-btn{
+  .submit-btn {
     width: 100%;
   }
 }
 
-@media (max-width: 540px){
-  #newPost{
+@media (max-width: 540px) {
+  #newPost {
     width: 90%;
   }
 }

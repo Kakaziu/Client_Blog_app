@@ -1,73 +1,85 @@
-import React, { useEffect, useState } from 'react'
-import { AiFillDelete, AiFillEdit } from 'react-icons/ai'
-import './style.css'
-import { useDispatch, useSelector } from 'react-redux'
-import { getPostsRequest, deletePostRequest } from '../../store/modules/post/postActions'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { AiFillDelete, AiFillEdit } from "react-icons/ai";
+import "./style.css";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getPostsRequest,
+  deletePostRequest,
+} from "../../store/modules/post/postActions";
+import { useNavigate } from "react-router-dom";
 
-const PostsAuthor = () =>{
+const PostsAuthor = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { posts } = useSelector((state) => state.PostReducer);
+  const { user } = useSelector((state) => state.UserReducer);
+  const [postsLoader, setPostsLoader] = useState(false);
+  const [postsUser, setPostsUser] = useState([]);
 
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const { posts } = useSelector(state => state.PostReducer)
-  const { user } = useSelector(state => state.UserReducer)
-  const [postsLoader, setPostsLoader] = useState(false)
-  const [postsUser, setPostsUser] = useState([])
+  useEffect(() => {
+    dispatch(getPostsRequest);
+  }, [posts]);
 
-  useEffect(() =>{
-    dispatch(getPostsRequest)
-  }, [posts])
+  useEffect(() => {
+    if (posts.length > 0) {
+      setPostsLoader(true);
 
-  useEffect(() =>{
-    if(posts.length > 0){
-      setPostsLoader(true)
-
-      const filteredPosts = posts.filter(post => post.create_by === user.id)
-      setPostsUser(filteredPosts)
-    }else{
-      setPostsUser([])
-      setPostsLoader(false)
+      const filteredPosts = posts.filter((post) => post.create_by === user.id);
+      setPostsUser(filteredPosts);
+    } else {
+      setPostsUser([]);
+      setPostsLoader(false);
     }
-  }, [posts])
+  }, [posts]);
 
-  function formatTitle(title){
+  function formatTitle(title) {
+    if (title.length > 15) {
+      let arrayTitle = title.split(" ");
 
-    if(title.length > 15){
-      let arrayTitle = title.split(' ')
-
-      if(arrayTitle.length > 1){
-        return arrayTitle[0] + ' ' + arrayTitle[1] + '...'
+      if (arrayTitle.length > 1) {
+        return arrayTitle[0] + " " + arrayTitle[1] + "...";
       }
 
-      return arrayTitle[0].slice(-15) + '...'
+      return arrayTitle[0].slice(-15) + "...";
     }
 
-    return title
+    return title;
   }
 
-  function deletePost(id){
-    dispatch(deletePostRequest(id))
-    dispatch(getPostsRequest)
+  function deletePost(id) {
+    dispatch(deletePostRequest(id));
+    dispatch(getPostsRequest);
   }
 
-  return(
+  return (
     <>
-      <h1 className='title-author'>Seus posts</h1>
-      <div className='posts-author'>
-        { postsLoader && postsUser.map(post =>{
-          return(
-            <div className='post-author' key={post.id}>
-              <img src={post.photo_post_url}/>
-              <h3>{formatTitle(post.title)}</h3>
-              <div className='icon-actions'>
-                <AiFillEdit size='22' className='icon-post icon-edit' onClick={() => navigate(`/post/${post.id}`)}/>
-                <AiFillDelete size='22' className='icon-post icon-delete' cursor='pointer' onClick={() => deletePost(post.id)}/>
+      <h1 className="title-author">Seus posts</h1>
+      <div className="posts-author">
+        {postsLoader &&
+          postsUser.map((post) => {
+            return (
+              <div className="post-author" key={post.id}>
+                <img src={post.photo_post_url} />
+                <h3>{formatTitle(post.title)}</h3>
+                <div className="icon-actions">
+                  <AiFillEdit
+                    size="22"
+                    className="icon-post icon-edit"
+                    onClick={() => navigate(`/post/${post.id}`)}
+                  />
+                  <AiFillDelete
+                    size="22"
+                    className="icon-post icon-delete"
+                    cursor="pointer"
+                    onClick={() => deletePost(post.id)}
+                  />
+                </div>
               </div>
-            </div>
-          )
-        })}
-      </div></>
-  )
-}
+            );
+          })}
+      </div>
+    </>
+  );
+};
 
-export default PostsAuthor
+export default PostsAuthor;

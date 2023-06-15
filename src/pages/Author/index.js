@@ -1,15 +1,15 @@
-import React from 'react'
-import './style.css'
-import HeaderAuthor from '../../components/HeaderAuthor'
-import PostsAuthor from '../../components/PostsAuthor'
+import React from "react";
+import "./style.css";
+import HeaderAuthor from "../../components/HeaderAuthor";
+import PostsAuthor from "../../components/PostsAuthor";
 
-const Author = () =>{
-  return(
+const Author = () => {
+  return (
     <section id="author">
-      <HeaderAuthor/>
-      <PostsAuthor/>
+      <HeaderAuthor />
+      <PostsAuthor />
     </section>
-  )
-}
+  );
+};
 
-export default Author
+export default Author;

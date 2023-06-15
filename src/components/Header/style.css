@@ -1,8 +1,8 @@
-.header{
+.header {
   padding: 20px;
 }
 
-.container{
+.container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -10,11 +10,11 @@
   margin: auto;
 }
 
-.header h2{
+.header h2 {
   font-size: 24px;
 }
 
-.menu button{
+.menu button {
   background-color: black;
   padding: 10px 30px;
   color: white;
@@ -26,11 +26,11 @@
   cursor: pointer;
 }
 
-.menu button:hover{
+.menu button:hover {
   background-color: rgba(0, 0, 0, 0.808);
 }
 
-.links{
+.links {
   position: absolute;
   z-index: 9999;
   right: 6%;
@@ -44,67 +44,67 @@
   background-color: white;
 }
 
-.links-show{
+.links-show {
   animation-name: showLinks;
   animation-duration: 0.5s;
   animation-fill-mode: forwards;
 }
 
-.icon-post{
+.icon-post {
   cursor: pointer;
   transition: 0.2s ease-in-out;
   color: white;
 }
 
-.icon-edit:hover{
+.icon-edit:hover {
   color: blue;
 }
 
-.icon-delete:hover{
+.icon-delete:hover {
   color: red;
 }
 
-.links a{
+.links a {
   display: block;
   padding: 10px;
   text-decoration: none;
   color: black;
 }
 
-.nav-mobile{
+.nav-mobile {
   display: none;
 }
 
-.menu span{
+.menu span {
   display: none;
 }
 
-@keyframes showLinks{
-  from{
+@keyframes showLinks {
+  from {
     top: 5%;
     opacity: 0;
   }
 
-  to{
+  to {
     top: 14%;
     opacity: 1;
   }
 }
 
-@media (max-width: 900px){
-  .container{
+@media (max-width: 900px) {
+  .container {
     width: 95%;
   }
 
-  .nav-mobile{
+  .nav-mobile {
     display: block;
   }
 
-  .nav-desktop{
+  .nav-desktop {
     display: none;
   }
 
-  .menu{
+  .menu {
     position: absolute;
     top: 5%;
     right: 4%;
@@ -119,19 +119,19 @@
     justify-content: center;
   }
 
-  .menu span{
+  .menu span {
     display: block;
     text-align: center;
     font-size: 18px;
     font-weight: bold;
   }
 
-  .menu hr{
+  .menu hr {
     display: block;
     margin: 10px 0px;
   }
 
-  .menu-mobile-btn{
+  .menu-mobile-btn {
     display: block;
     position: absolute;
     right: 5%;
@@ -139,23 +139,23 @@
     cursor: pointer;
   }
 
-  .menuOn{
+  .menuOn {
     animation-name: showMenu;
     animation-duration: 0.3s;
     animation-fill-mode: forwards;
   }
 
-  .menu-no-user-mobile{
+  .menu-no-user-mobile {
     display: block;
     padding: 20px;
     text-align: center;
   }
 
-  .menu-no-user-mobile hr{
+  .menu-no-user-mobile hr {
     margin: 20px 0px;
   }
 
-  @keyframes showMenu{
+  @keyframes showMenu {
     from {
       top: 5%;
       opacity: 0;

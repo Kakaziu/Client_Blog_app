@@ -1,15 +1,15 @@
-import React from 'react'
-import './style.css'
-import Header from '../../components/Header'
-import ContentRead from '../../components/ContentRead'
+import React from "react";
+import "./style.css";
+import Header from "../../components/Header";
+import ContentRead from "../../components/ContentRead";
 
-function ViewPost(){
-  return(
+function ViewPost() {
+  return (
     <section id="read-pag">
-      <Header isReader={true}/>
-      <ContentRead/>
+      <Header isReader={true} />
+      <ContentRead />
     </section>
-  )
+  );
 }
 
-export default ViewPost
+export default ViewPost;
